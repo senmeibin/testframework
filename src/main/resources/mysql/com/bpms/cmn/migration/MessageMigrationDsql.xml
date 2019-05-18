@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <!--迁移指定日期前的消息-->
+    <migrationMessage>
+        <![CDATA[
+        INSERT INTO cmn_message_history
+        (
+            uid
+            ,enterprise_uid
+            ,message_type_cd
+            ,message_title
+            ,message_content
+            ,importance_degree_cd
+            ,send_type_cd
+            ,send_dept_uids
+            ,send_role_uids
+            ,message_start_date
+            ,message_end_date
+            ,all_count
+            ,unread_count
+            ,is_mail_notice
+            ,is_sms_notice
+            ,migration_date
+            ,remark
+            ,insert_user
+            ,update_user
+            ,insert_date
+            ,update_date
+            ,record_status
+        )
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.message_type_cd
+            ,main.message_title
+            ,main.message_content
+            ,main.importance_degree_cd
+            ,main.send_type_cd
+            ,main.send_dept_uids
+            ,main.send_role_uids
+            ,main.message_start_date
+            ,main.message_end_date
+            ,main.all_count
+            ,main.unread_count
+            ,main.is_mail_notice
+            ,main.is_sms_notice
+            ,NOW()
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+        FROM
+            cmn_message main
+        WHERE
+            -- 指定时间前的消息数据
+            main.insert_date <= :insertDate
+        ]]>
+    </migrationMessage>
+
+    <!--删除已迁移过的消息数据-->
+    <deleteMessage>
+        <![CDATA[
+        DELETE
+        FROM
+            cmn_message
+        WHERE
+            -- 指定时间前的消息数据
+            insert_date <= :insertDate
+        ]]>
+    </deleteMessage>
+
+    <!--迁移指定日期前的消息明细-->
+    <migrationMessageDetail>
+        <![CDATA[
+        INSERT INTO cmn_message_detail_history
+        (
+            uid
+            ,enterprise_uid
+            ,message_uid
+            ,user_uid
+            ,read_type_cd
+            ,migration_date
+            ,remark
+            ,insert_user
+            ,update_user
+            ,insert_date
+            ,update_date
+            ,record_status
+        )
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.message_uid
+            ,main.user_uid
+            ,main.read_type_cd
+            ,NOW()
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+        FROM
+            cmn_message_detail main
+        WHERE
+            -- 指定时间前的消息明细数据
+            main.insert_date <= :insertDate
+        ]]>
+    </migrationMessageDetail>
+
+    <!--删除已迁移过的消息明细数据-->
+    <deleteMessageDetail>
+        <![CDATA[
+        DELETE
+        FROM
+            cmn_message_detail
+        WHERE
+            -- 指定时间前的消息明细数据
+            insert_date <= :insertDate
+        ]]>
+    </deleteMessageDetail>
+</sql>

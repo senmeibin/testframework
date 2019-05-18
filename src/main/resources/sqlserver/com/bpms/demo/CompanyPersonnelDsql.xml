@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.last_year_total_employees
+            ,main.number_of_doctor
+            ,main.number_of_returned_students
+            ,main.number_of_thousands_plans
+            ,main.number_of_graduates
+            ,main.number_of_college_graduates
+            ,main.number_of_shanghai
+            ,main.number_of_foreign
+            ,main.number_of_administrative_staff
+            ,main.number_of_marketing_staff
+            ,main.number_of_research
+            ,main.number_of_lead
+            ,main.number_of_master
+            ,main.number_of_undergraduate
+            ,main.number_of_secondary_vocational 
+            ,main.number_of_high_school
+            ,main.number_of_senior_title
+            ,main.number_of_intermediate_title
+            ,main.number_of_junior_title
+            ,main.number_of_none_title
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_personnel main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

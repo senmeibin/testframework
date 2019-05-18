@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.app_code
+            ,main.subject
+            ,main.message
+            ,main.mail_from
+            ,main.mail_to
+            ,main.mail_cc
+            ,main.mail_bcc
+            ,main.retry_count
+            ,main.send_date
+            ,main.send_result
+            ,main.error_message
+            ,main.attachment_name
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            sys_mail_log_history main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

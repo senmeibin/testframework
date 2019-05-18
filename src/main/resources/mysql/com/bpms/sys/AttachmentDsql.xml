@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.app_code
+            ,main.relation_uid
+            ,main.category_cd
+            ,main.module_name
+            ,main.file_name
+            ,main.file_path
+            ,main.big_image_path
+            ,main.small_image_path
+            ,main.file_size
+            ,main.mime_type
+            ,main.preview_count
+            ,main.download_count
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,app.app_name
+        FROM 
+            sys_attachment main
+            LEFT JOIN sys_application app ON app.app_code = main.app_code
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+
+    <!-- 根据relation_uid删除所有对应的附件 -->
+    <deleteAttachmentByRelationUid>
+        <![CDATA[
+        UPDATE
+            sys_attachment
+        SET
+            record_status = 9
+        WHERE
+            record_status = 1
+            AND relation_uid = '@relation_uid'
+        ]]>
+    </deleteAttachmentByRelationUid>
+</sql>

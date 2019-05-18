@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-lazy-init="true">
+
+    <description>Spring公共配置</description>
+
+    <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.bpms.core;com.bpms.*.entity;com.bpms.*.service">
+    </context:component-scan>
+    <!-- 对JDBC配置进行解密  -->
+    <bean id="propertyConfigurer" class="com.bpms.core.security.EncryptablePropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath*:/application.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- Jpa Entity Manager 配置 -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
+        <property name="packagesToScan" value="com.bpms.*.entity.ext"/>
+
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+                <entry key="hibernate.show_sql" value="false"/>
+                <entry key="hibernate.cache.use_query_cache" value="false"/>
+                <entry key="hibernate.cache.use_second_level_cache" value="false"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform">
+            <bean factory-method="getDialect" class="com.bpms.core.utils.Hibernates">
+                <constructor-arg ref="dataSource"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- Spring Data Jpa配置 -->
+    <jpa:repositories base-package="com.bpms.*.dao" factory-class="com.bpms.core.dao.BaseJpaRepositoryFactoryBean"
+                      transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory">
+    </jpa:repositories>
+    <jpa:auditing auditor-aware-ref="userAuditorAware"/>
+
+    <!-- Jpa 事务配置 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- JSR303 Validator定义 -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- function初始化services -->
+    <bean class="com.bpms.core.utils.SpringUtils"/>
+    <import resource="applicationContext-shiro.xml"/>
+    <!-- 消息队列 -->
+    <import resource="applicationContext-activemq.xml"/>
+    <!-- 定时任务 -->
+    <import resource="applicationContext-task-sys.xml"/>
+    <import resource="applicationContext-task-activemq.xml"/>
+    <import resource="applicationContext-cache.xml"/>
+
+    <!-- production环境 -->
+    <beans profile="prod">
+        <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties"/>
+
+        <bean id="dataSource" class="com.bpms.core.datasource.DynamicDataSource">
+            <property name="targetDataSources">
+                <map key-type="java.lang.String">
+                    <!-- 这个key需要和程序中的key一致 -->
+                    <entry key="master" value-ref="masterDataSource"/>
+                    <entry key="slave" value-ref="slaveDataSource"/>
+                </map>
+            </property>
+            <property name="defaultTargetDataSource" ref="masterDataSource">
+            </property>
+        </bean>
+
+        <!-- 数据源配置, 使用Tomcat JDBC连接池 -->
+        <bean id="masterDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <!-- Connection Info -->
+            <property name="driverClassName" value="${jdbc.driver}"/>
+            <!--<property name="url" value="${jdbc.master.url}"/>-->
+            <property name="url" value="${jdbc.master.url}"/>
+            <property name="username" value="${jdbc.master.username}"/>
+            <property name="password" value="${jdbc.master.password}"/>
+
+            <!-- Connection Pooling Info -->
+            <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+            <property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+            <property name="minIdle" value="0"/>
+            <property name="defaultAutoCommit" value="false"/>
+            <property name="testOnBorrow" value="false"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="testOnReturn" value="false"/>
+            <property name="validationQuery" value="SELECT 1"/>
+            <property name="validationQueryTimeout" value="10000"/>
+        </bean>
+
+        <bean id="slaveDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+            <!-- Connection Info -->
+            <property name="driverClassName" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.slave.url}"/>
+            <property name="username" value="${jdbc.slave.username}"/>
+            <property name="password" value="${jdbc.slave.password}"/>
+
+            <!-- Connection Pooling Info -->
+            <property name="maxActive" value="${jdbc.pool.maxActive}"/>
+            <property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+            <property name="minIdle" value="0"/>
+            <property name="defaultAutoCommit" value="false"/>
+            <property name="testOnBorrow" value="false"/>
+            <property name="testWhileIdle" value="true"/>
+            <property name="testOnReturn" value="false"/>
+            <property name="validationQuery" value="SELECT 1"/>
+            <property name="validationQueryTimeout" value="10000"/>
+        </bean>
+
+        <!-- 定义AOP切面处理器 -->
+        <bean class="com.bpms.core.datasource.DataSourceInterceptor" id="dataSourceAspect">
+            <!-- 指定slave方法的前缀（非必须） -->
+            <property name="slaveMethodStart" value="query,find,get,search,is"/>
+        </bean>
+    </beans>
+</beans>

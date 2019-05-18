@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.company_no
+            ,main.company_name
+            ,main.organization_no
+            ,main.registered_province_uid
+            ,province.region_name registered_province_name
+            ,main.registered_city_uid
+            ,city.region_name registered_city_name
+            ,main.registered_area_uid
+            ,area.region_name registered_area_name
+            ,main.registered_address
+            ,main.establishment_date
+            ,main.settling_date
+            ,main.registered_capital
+            ,main.base_uid
+            ,base.base_name
+            ,main.company_principal
+            ,main.principal_phone
+            ,main.principal_mail
+            ,main.contact_person
+            ,main.contact_phone
+            ,main.contact_mail
+            ,main.lease_area
+            ,main.office_address
+            ,main.office_postal_code
+            ,main.registration_type_cd
+            ,main.high_tech_type
+            ,main.industry_category
+            ,main.professional_technical_cd
+            ,main.website
+            ,main.incubation_state_cd
+            ,main.graduation_no
+            ,main.main_product
+            ,main.station_counts
+            ,main.station_position
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_001.sub_name registration_type_name
+            ,DEMO_002.sub_name professional_technical_name
+            ,DEMO_003.sub_name incubation_state_name
+            ,characteristics.sub_cd enterprise_characteristics
+            ,characteristics.sub_name enterprise_characteristics_name
+            ,market.sub_cd market_classification
+            ,market.sub_name market_classification_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM
+            demo_company_information main
+            LEFT JOIN sys_dictionary DEMO_001 ON DEMO_001.record_status = 1 AND DEMO_001.main_cd = 'DEMO_001' AND DEMO_001.sub_cd = main.registration_type_cd
+            LEFT JOIN sys_dictionary DEMO_002 ON DEMO_002.record_status = 1 AND DEMO_002.main_cd = 'DEMO_002' AND DEMO_002.sub_cd = main.professional_technical_cd
+            LEFT JOIN sys_dictionary DEMO_003 ON DEMO_003.record_status = 1 AND DEMO_003.main_cd = 'DEMO_003' AND DEMO_003.sub_cd = main.incubation_state_cd
+            LEFT JOIN cmn_region province ON province.record_status = 1 AND province.uid  = main.registered_province_uid
+            LEFT JOIN cmn_region city ON city.record_status = 1 AND city.uid  = main.registered_city_uid
+            LEFT JOIN cmn_region area ON area.record_status = 1 AND area.uid  = main.registered_area_uid
+            LEFT JOIN demo_base_info base ON base.record_status = 1 AND base.uid = main.base_uid
+            LEFT JOIN
+                (
+                    SELECT
+                        GROUP_CONCAT(t.sub_cd) sub_cd,
+                        GROUP_CONCAT(DEMO_005.sub_name) sub_name,
+                        t.company_uid
+                    FROM
+                        demo_company_attribute_details t
+                        LEFT JOIN sys_dictionary DEMO_005 ON DEMO_005.record_status = 1 AND DEMO_005.main_cd = 'DEMO_005' AND DEMO_005.sub_cd = t.sub_cd
+                    WHERE
+                        t.record_status = 1
+                        AND t.main_cd ='01'
+                    GROUP BY
+                        t.company_uid
+                ) characteristics
+                ON characteristics.company_uid = main.uid
+            LEFT JOIN
+                (
+                    SELECT
+                        GROUP_CONCAT(t.sub_cd) sub_cd,
+                        GROUP_CONCAT(DEMO_006.sub_name) sub_name,
+                        t.company_uid
+                    FROM
+                        demo_company_attribute_details t
+                        LEFT JOIN sys_dictionary DEMO_006 ON DEMO_006.record_status = 1 AND DEMO_006.main_cd = 'DEMO_006' AND DEMO_006.sub_cd = t.sub_cd
+                    WHERE
+                        t.record_status = 1
+                        AND t.main_cd ='02'
+                    GROUP BY
+                        t.company_uid
+                ) market
+                ON market.company_uid = main.uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

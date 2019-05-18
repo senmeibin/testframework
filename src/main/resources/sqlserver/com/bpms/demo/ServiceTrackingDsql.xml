@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,base.base_name
+            ,main.visit_user_uid
+            ,main.visitor
+            ,main.next_tracking_time
+            ,main.next_tracking_user_uid
+            ,main.business_requirements
+            ,main.visit_time
+            ,main.visit_status_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_023.sub_name visit_status_name
+            ,visit_user.user_name visit_user_name
+            ,next_tracking_user.user_name next_tracking_user_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            demo_service_tracking main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN demo_base_info base ON base.uid = company.base_uid AND base.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_023 ON DEMO_023.record_status = 1 AND DEMO_023.main_cd = 'DEMO_023' AND DEMO_023.sub_cd = main.visit_status_cd
+            LEFT JOIN sys_user visit_user ON visit_user.uid = main.visit_user_uid
+            LEFT JOIN sys_user next_tracking_user ON next_tracking_user.uid = main.next_tracking_user_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.code
+            ,main.name
+            ,main.abbreviation
+            ,main.property_cd
+            ,main.scale_cd
+            ,main.address
+            ,main.zipcode
+            ,main.telephone
+            ,main.fax
+            ,main.email
+            ,main.url
+            ,main.belong_dept_uid
+            ,main.belong_user_uid
+            ,main.contact_name
+            ,main.remark
+            ,main.file_relation_uid
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,SYS100.sub_name property_name
+            ,SYS101.sub_name scale_name
+            ,belong_dept.dept_name belong_dept_name 
+            ,belong_user.user_name belong_user_name 
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            sys_company main
+            LEFT JOIN sys_dictionary SYS100 ON SYS100.record_status = 1 AND SYS100.main_cd = 'SYS100' AND SYS100.sub_cd = main.property_cd
+            LEFT JOIN sys_dictionary SYS101 ON SYS101.record_status = 1 AND SYS101.main_cd = 'SYS101' AND SYS101.sub_cd = main.scale_cd
+            LEFT JOIN sys_dept belong_dept ON belong_dept.uid = main.belong_dept_uid 
+            LEFT JOIN sys_user belong_user ON belong_user.uid = main.belong_user_uid 
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

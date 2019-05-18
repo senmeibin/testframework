@@ -1,0 +1,581 @@
+/*普通登录页专用样式*/
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+}
+
+.form-signin h2.form-signin-header {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    border-bottom: 1px dotted #ccc;
+    line-height: 60px;
+}
+
+.form-signin-header img {
+    margin-left: -20px;
+}
+
+.form-signin .checkbox {
+    margin-bottom: 14px;
+    padding-left: 22px;
+    color: #6c6c6e;
+    font-weight: 300;
+    font-family: 'Microsoft YaHei', sans-serif;
+}
+
+.form-signin .forget-password {
+    margin-bottom: 14px;
+    padding-left: 22px;
+    color: #6c6c6e;
+    font-weight: 300;
+    font-family: 'Microsoft YaHei', sans-serif;
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+
+.form-signin .forget-password a:hover {
+    text-underline: none;
+}
+
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="text"], .form-signin input[type="password"] {
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.form-signin p {
+    text-align: left;
+    color: #b6b6b6;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.form-signin a, .form-signin a:hover {
+    color: #63A1D0;
+}
+
+.form-signin a:hover {
+    color: #286090;
+}
+
+.form-signin a:focus {
+    color: #286090;
+}
+
+.user-login-info {
+    width: 330px;
+    padding: 20px 35px 20px 40px;
+}
+
+.user-login-info .form-control:last-child {
+    margin-bottom: 0 !important;
+}
+
+.login-background-image {
+    background: url(../../images/auth/login_bg.jpg) top no-repeat #fff;
+}
+
+.login-frame {
+    width: 900px;
+    height: auto;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.login-frame .login-logo {
+    height: auto;
+    padding: 85px 0 30px 30px;
+}
+
+.login-frame .login-logo-footer {
+    background: url(../../images/auth/login_logo_foot.png) 70px 0 no-repeat;
+    height: 10px;
+}
+
+.login-frame .login-content {
+    width: 900px;
+    height: 350px;
+    border-radius: 6px;
+    background: #0099cc;
+}
+
+.login-footer {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    line-height: 80px;
+    position: fixed;
+    bottom: 0px;
+}
+
+.login-frame .login-content .login-content-left {
+    float: left;
+    margin: 70px 0 0 30px;
+}
+
+.login-frame .login-content .login-content-rig {
+    width: 360px;
+    height: 320px;
+    border-radius: 6px;
+    background: #fff;
+    float: right;
+    margin: 15px 15px 0 0;
+}
+
+.login-frame .login-content .login-content-rig span.error {
+    color: #f00;
+}
+
+/*找回密码-强制修改密码*/
+.full-width {
+    background-color: #E6E6E6;
+}
+
+.auth-center-header {
+    width: 100%;
+    height: 10px;
+    background-color: #09c;
+}
+
+.auth-center-logo {
+    /*文字LOGO样式*/
+    font-size: 30px;
+    color: #0099CB;
+
+    width: 900px;
+    margin: 40px auto;
+}
+
+.auth-center-logo img {
+    margin-left: 10px;
+}
+
+.auth-center-logo span {
+    border-left: 1px solid #666;
+    font-size: 18px;
+    margin-left: 30px;
+    padding-left: 20px;
+}
+
+.auth-center-footer {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 30px;
+    z-index: -1;
+}
+
+.retrieve-password-content {
+    width: 898px;
+    height: auto;
+    margin: 0 auto;
+    padding: 29px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+}
+
+.retrieve-password-content h5 {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.retrieve-password-content div.text-center {
+    margin-top: 30px;
+}
+
+.retrieve-password-success {
+    height: auto;
+    overflow: hidden;
+    margin: 30px 0;
+}
+
+.retrieve-password-success img {
+    margin-left: 150px;
+    width: 90px;
+    display: block;
+    float: left;
+}
+
+.retrieve-password-success span {
+    font-size: 18px;
+    margin-left: 20px;
+    padding-top: 40px;
+    display: block;
+    float: left;
+}
+
+.retrieve-password-return {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.retrieve-password-return button {
+    width: 200px;
+}
+
+/*强制变更密码专用样式*/
+.force-change-password-content {
+    width: 898px;
+    height: auto;
+    margin: 0 auto;
+    padding: 9px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+
+.force-change-password-left {
+    float: left;
+    width: 490px;
+}
+
+.force-change-password-right {
+    float: right;
+    width: 380px;
+}
+
+.force-change-password-right h3 {
+    font-size: 18px;
+    border-bottom: 1px dashed #ccc;
+    padding: 25px 0 20px;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.force-change-password-right div.text-center {
+    margin-top: 25px;
+}
+
+/* 登录全局专用样式 */
+body, h1, h2, h3, h4, h5, h6, hr, p, dl, dt, dd, ul, ol, li, th, td, form, button, input, select, textarea, label {
+    margin: 0;
+    padding: 0;
+}
+
+body, button, input, select, textarea {
+    font: 12px "微软雅黑";
+}
+
+i, em {
+    font-style: normal;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a, a:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+}
+
+button {
+    cursor: pointer;
+}
+
+input:focus, button:focus, textarea:focus {
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 1em;
+    margin: 0;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+::-moz-placeholder {
+    color: #ccc;
+}
+
+:-ms-input-placeholder {
+    color: #ccc;
+}
+
+body {
+    color: #666;
+    background-color: #1f2326;
+}
+
+.unified-login-top {
+    background-color: #1a1e21;
+    border-bottom: 1px solid #606365;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+}
+
+.unified-login-logo {
+    margin: 18px 0 0 30px;
+    /*文字LOGO样式*/
+    font-size: 26px;
+    color: #FFF;
+}
+
+.unified-login-content {
+    position: relative;
+    width: 1300px;
+    margin: 0 auto;
+}
+
+.unified-login-input {
+    position: absolute;
+    top: 70px;
+    right: 50px;
+    width: 480px;
+}
+
+.unified-login-edit {
+    background-color: #fff;
+    height: 350px;
+    margin: 0 65px;
+}
+
+.unified-login-edit h3 {
+    font-size: 23px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    line-height: 65px;
+    padding-top: 10px;
+}
+
+.unified-login-edit ul {
+    padding: 10px 15px;
+}
+
+.unified-login-edit ul li {
+    padding-top: 15px;
+    position: relative;
+}
+
+.unified-login-edit ul li i {
+    position: absolute;
+    top: 27px;
+    left: 12px;
+    color: #ccc;
+    font-size: 19px;
+}
+
+.unified-login-edit ul li span {
+    color: red;
+    margin-top: 2px;
+    display: inline-block;
+}
+
+.unified-login-edit ul li a:hover {
+    color: #09c;
+}
+
+.unified-login-edit ul li .unified-left label {
+    cursor: pointer;
+    moz-user-select: -moz-none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.unified-login-note {
+    text-align: center;
+    color: #787d80;
+    padding-top: 20px;
+    line-height: 21px;
+}
+
+.unified-login-footer {
+    background-color: #373d41;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.unified-login-footer ul {
+    overflow: hidden;
+    padding: 10px 0;
+    width: 1200px;
+    margin: 0 auto;
+    line-height: 23px;
+}
+
+.unified-login-footer ul li {
+    width: 10%;
+    float: left;
+    text-align: center;
+    border-right: 1px solid #4b5053;
+    border-left: 1px solid #24282a;
+    margin: 5px 0;
+}
+
+.unified-login-footer ul li a {
+    display: block;
+    color: #9b9ea0;
+}
+
+.unified-login-footer ul li a:hover {
+    color: #fff;
+}
+
+.unified-left {
+    float: left;
+}
+
+.unified-right {
+    float: right;
+}
+
+.unified-input {
+    width: 100%;
+    border: 1px solid #ddd;
+    height: 40px;
+    font-size: 14px;
+    padding-left: 40px;
+}
+
+.unified-button {
+    width: 100%;
+    border: none;
+    height: 40px;
+    background-color: #09c;
+    color: #fff;
+    font-size: 14px;
+}
+
+/*蓝色登录主题专用样式*/
+.unified-login-blue .unified-login-blue-bg {
+    background-image: linear-gradient(-180deg, #1a1454 0%, #0e81a5 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.unified-login-blue .unified-login-top {
+    background-color: transparent;
+    border-color: #3b3d72;
+}
+
+.unified-login-blue .unified-login-footer {
+    background-color: #277fa3;
+}
+
+.unified-login-blue .unified-login-footer ul li {
+    border-left: 1px solid #1d607b;
+    border-right: 1px solid #4792b1;
+}
+
+.unified-login-blue .unified-login-footer ul li a {
+    color: #bdd2dd;
+}
+
+.unified-login-blue .unified-login-input {
+    z-index: 99;
+    left: 50%;
+    right: auto;
+    margin-left: 80px;
+}
+
+.unified-login-blue .unified-login-note {
+    color: #bdd2dd;
+}
+
+body.unified-login-blue {
+    background-color: #0e81a5;
+}
+
+/*登录轮播UI专用样式*/
+.swiper-slide {
+    height: 450px;
+}
+
+.swiper-slide > div {
+    position: relative;
+    width: 1160px;
+    margin: 0 auto;
+}
+
+.swiper-slide > div div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+}
+
+.swiper-slide > div img {
+    width: 600px;
+}
+
+.swiper-pagination-bullet {
+    background-color: transparent;
+    border: 2px solid #fff;
+    opacity: 0.1;
+    width: 12px;
+    height: 12px;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: transparent;
+    opacity: 0.6;
+}
+
+.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+    margin: 0 6px;
+}
+
+.swiper-slide .move-down, .swiper-slide .move-up {
+    transition-duration: 0.7s;
+}
+
+.animation .move-down {
+    transform: translateY(15px);
+}
+
+.animation .move-up {
+    transform: translateY(-15px);
+}
+
+pre.text-newline {
+    width: 500px ;
+    border: 0px solid #000 ;
+    white-space: pre-wrap ;
+}
+
+.login-content-font {
+    font-size: 15px;
+    color:white;
+}

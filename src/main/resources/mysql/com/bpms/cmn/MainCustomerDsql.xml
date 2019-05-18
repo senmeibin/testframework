@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.main_customer_name
+            ,main.main_customer_abbreviation
+            ,main.contact_name
+            ,main.contact_telephone
+            ,main.introduction
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            cmn_main_customer main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+
+    <getMainCustomers>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.main_customer_name
+        FROM
+            cmn_main_customer main
+        WHERE
+            main.record_status = 1
+            %s
+        ORDER BY
+            CONVERT(main.main_customer_name USING gbk) ASC
+        LIMIT 20 -- 取符合条件的前20条
+        ]]>
+    </getMainCustomers>
+</sql>

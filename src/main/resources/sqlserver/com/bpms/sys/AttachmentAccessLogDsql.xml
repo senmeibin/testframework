@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.attachment_uid
+            ,main.user_uid
+            ,main.access_type
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,user.user_name user_name 
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM
+            sys_attachment_access_log main
+            LEFT JOIN sys_user user ON user.uid = main.user_uid 
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

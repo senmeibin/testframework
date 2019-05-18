@@ -1,0 +1,86 @@
+.error-head {
+    width: 100%;
+    height: 10px;
+    background-color: #09c;
+}
+
+.error-logo {
+    /*文字LOGO样式*/
+    font-size: 30px;
+    color: #0099CB;
+
+    width: 900px;
+    margin: 40px auto;
+}
+
+.error-logo img {
+    margin-left: 10px;
+}
+
+.error-logo span {
+    border-left: 1px solid #666;
+    font-size: 18px;
+    margin-left: 30px;
+    padding-left: 20px;
+}
+
+.error-content {
+    width: 898px;
+    height: auto;
+    margin: 0 auto;
+    padding: 29px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+}
+
+.error-content h5 {
+    text-align: center;
+    margin: 40px 0 20px;
+    font-size: 12px;
+    color: #aaa;
+}
+
+.error-content div.text-center {
+    margin-top: 30px;
+}
+
+.error-foot {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    bottom: 30px;
+    z-index: -1;
+}
+
+.error-message {
+    height: auto;
+    overflow: hidden;
+    margin: 30px 0px 50px 0px;
+}
+
+.error-message img {
+    margin-left: 150px;
+    width: 90px;
+    display: block;
+    float: left;
+}
+
+.error-message span {
+    font-size: 18px;
+    margin-left: 20px;
+    padding-top: 40px;
+    display: block;
+    float: left;
+}
+
+.error-button {
+    border-top: 1px dashed #ccc;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.error-button button {
+    width: 150px;
+    height: 32px;
+    font-size: 14px;
+}

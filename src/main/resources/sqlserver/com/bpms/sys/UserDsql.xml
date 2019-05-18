@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            -- 必须全部加载主表字段
+            main.*
+            ,dept.dept_name
+            ,dept.dept_full_name
+            ,post.position_name position_name
+            ,SYS004.sub_name sex_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,dept_manage.dept_uids dept_manage_uids
+            ,city_manage.city_uids city_manage_uids
+            ,temp_dept.user_company_uid
+            ,temp_dept.user_company_name
+            ,temp_dept.user_company_full_name
+            ,temp_dept.user_area_uid
+            ,temp_dept.user_area_name
+            ,temp_dept.user_area_full_name
+            ,user_roles.user_role_names
+        FROM
+            sys_user main
+            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid
+            LEFT JOIN
+            (
+                SELECT
+                    company_dept.uid user_company_uid,
+                    company_dept.dept_name user_company_name,
+                    company_dept.dept_full_name user_company_full_name,
+                    area_dept.uid user_area_uid,
+                    area_dept.dept_name user_area_name,
+                    area_dept.dept_full_name user_area_full_name
+                FROM
+                    sys_dept company_dept
+                    LEFT JOIN sys_dept area_dept ON company_dept.parent_dept_uid = area_dept.uid
+                WHERE
+                    company_dept.dept_class = 2
+                    AND company_dept.record_status = 1
+                    AND area_dept.dept_class = 1
+                    AND area_dept.record_status = 1
+            ) temp_dept ON temp_dept.user_company_uid = dept.parent_dept_uid
+            LEFT JOIN sys_position post ON post.uid = main.position_uid AND post.record_status = 1
+            LEFT JOIN sys_dictionary SYS004 ON SYS004.record_status = 1 AND SYS004.main_cd = 'SYS004' AND SYS004.sub_cd = main.sex_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN
+                (
+                    SELECT
+                        user_uid,
+                        dept_uids = STUFF((SELECT ',' + dept_uid FROM sys_dept_manage tmp WHERE tmp.user_uid = sys_dept_manage.user_uid FOR XML PATH('')), 1, 1, '')
+                    FROM
+                        sys_dept_manage
+                    WHERE
+                        record_status = 1
+                    GROUP BY
+                        user_uid
+                ) dept_manage ON dept_manage.user_uid = main.uid
+        WHERE
+            (main.record_status = 1 OR main.record_status = 8)
+            %s
+       ]]>
+    </search>
+
+    <getCurrentUserPermissions>
+        <![CDATA[
+        SELECT
+            CONCAT(permission.domain, ':', permission.targets, ':', permission.actions) part
+        FROM
+            sys_role_permission role_permission,
+            sys_user_role user_role,
+            sys_permission permission
+        WHERE
+            user_role.role_uid = role_permission.role_uid
+            AND role_permission.permission_uid = permission.uid
+            AND permission.record_status = 1
+        ]]>
+    </getCurrentUserPermissions>
+
+    <!-- 更新最后登录时间和登录次数 -->
+    <updateLoginCountAndTime>
+        <![CDATA[
+        UPDATE
+            sys_user
+        SET
+            login_count = ISNULL(login_count, 0) + 1
+            ,last_login_time = GETDATE()
+        WHERE
+            uid = :userUid
+        ]]>
+    </updateLoginCountAndTime>
+</sql>

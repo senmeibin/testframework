@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.user_cd
+            ,main.user_name
+            ,main.sex_cd
+            ,main.birthday
+            ,main.id_card_no
+            ,main.ancestral_native_place
+            ,main.ethnicity_cd
+            ,main.user_number
+            ,main.registered_residence
+            ,main.policy_cd
+            ,main.education_cd
+            ,main.educational_degree_cd
+            ,main.stature
+            ,main.weight
+            ,main.blood_type_cd
+            ,main.marital_status_cd
+            ,main.nationality
+            ,main.email
+            ,main.telephone
+            ,main.mobile
+            ,main.fax
+            ,main.home_address
+            ,main.graduate_institutions
+            ,main.major 
+            ,main.residence_type
+            ,main.birth_place
+            ,main.contact_province_uid
+            ,province.region_name contact_province_name
+            ,main.contact_city_uid
+            ,city.region_name contact_city_name
+            ,main.contact_county_uid
+            ,county.region_name contact_county_name
+            ,main.contact_address
+            ,main.health_info
+            ,main.base_uid
+            ,main.dept_uid
+            ,main.position_uid
+            ,main.positions_grade
+            ,main.first_job_date
+            ,main.entry_date
+            ,main.probation_end_date
+            ,main.positive_date
+            ,main.retire_date
+            ,main.employment_type
+            ,main.contract_start_date
+            ,main.contract_end_date
+            ,main.accumulation_fund_account
+            ,main.bank_name
+            ,main.bank_account_number
+            ,main.location_uid
+            ,main.status_cd
+            ,main.constellation
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,SYS004.sub_name sex_name
+            ,DEMO_028.sub_name ethnicity_name
+            ,DEMO_029.sub_name policy_name
+            ,DEMO_030.sub_name education_name
+            ,DEMO_031.sub_name educational_degree_name
+            ,DEMO_032.sub_name blood_type_name
+            ,DEMO_033.sub_name marital_status_name
+            ,DEMO_034.sub_name status_name
+            ,dept.dept_name dept_name
+            ,dept.dept_full_name
+            ,post.position_name
+            ,location.dept_name location_name
+            ,location.dept_full_name location_full_name
+            ,temp_dept.company_uid
+            ,temp_dept.company_name
+            ,temp_dept.area_uid
+            ,temp_dept.area_name
+            ,base.base_name
+            ,DATE_FORMAT(NOW(),'%Y') - DATE_FORMAT(main.birthday,'%Y') age
+            ,DATE_FORMAT(NOW(),'%Y') - DATE_FORMAT(main.entry_date,'%Y') seniority
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM
+            demo_employee main
+            LEFT JOIN sys_dictionary SYS004 ON SYS004.record_status = 1 AND SYS004.main_cd = 'SYS004' AND SYS004.sub_cd = main.sex_cd
+            LEFT JOIN sys_dictionary DEMO_028 ON DEMO_028.record_status = 1 AND DEMO_028.main_cd = 'DEMO_028' AND DEMO_028.sub_cd = main.ethnicity_cd
+            LEFT JOIN sys_dictionary DEMO_029 ON DEMO_029.record_status = 1 AND DEMO_029.main_cd = 'DEMO_029' AND DEMO_029.sub_cd = main.policy_cd
+            LEFT JOIN sys_dictionary DEMO_030 ON DEMO_030.record_status = 1 AND DEMO_030.main_cd = 'DEMO_030' AND DEMO_030.sub_cd = main.education_cd
+            LEFT JOIN sys_dictionary DEMO_031 ON DEMO_031.record_status = 1 AND DEMO_031.main_cd = 'DEMO_031' AND DEMO_031.sub_cd = main.educational_degree_cd
+            LEFT JOIN sys_dictionary DEMO_032 ON DEMO_032.record_status = 1 AND DEMO_032.main_cd = 'DEMO_032' AND DEMO_032.sub_cd = main.blood_type_cd
+            LEFT JOIN sys_dictionary DEMO_033 ON DEMO_033.record_status = 1 AND DEMO_033.main_cd = 'DEMO_033' AND DEMO_033.sub_cd = main.marital_status_cd
+            LEFT JOIN sys_dictionary DEMO_034 ON DEMO_034.record_status = 1 AND DEMO_034.main_cd = 'DEMO_034' AND DEMO_034.sub_cd = main.status_cd
+            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid AND dept.record_status = 1
+            LEFT JOIN sys_dept location ON location.uid = main.location_uid AND location.record_status = 1
+            LEFT JOIN sys_position post ON post.uid = main.position_uid AND post.record_status = 1
+            LEFT JOIN
+            (
+                SELECT
+                    t.uid, t.dept_name,c.uid company_uid,c.dept_name company_name ,a.uid area_uid,a.dept_name area_name
+                FROM
+                    sys_dept t
+                    LEFT JOIN  sys_dept c ON c.uid = t.company_dept_uid
+                    LEFT JOIN sys_dept a ON a.uid = c.parent_dept_uid
+                WHERE
+                    t.dept_class NOT IN (0,1,2)
+            ) temp_dept ON main.dept_uid = temp_dept.uid
+            LEFT JOIN cmn_region province ON province.uid = main.contact_province_uid AND province.region_grade = 1
+            LEFT JOIN cmn_region city ON city.uid = main.contact_city_uid AND city.region_grade = 2
+            LEFT JOIN cmn_region county ON county.uid = main.contact_county_uid AND county.region_grade = 3
+            LEFT JOIN demo_base_info base ON base.uid = main.base_uid AND base.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.intellectual_property_cd
+            ,main.occurrence_date
+            ,main.serial_number
+            ,main.name
+            ,main.state_cd
+            ,main.effective_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_011.sub_name intellectual_property_name
+            ,DEMO_012.sub_name state_name
+            ,SYS010.sub_name effective_name 
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_intellectual main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_011 ON DEMO_011.record_status = 1 AND DEMO_011.main_cd = 'DEMO_011' AND DEMO_011.sub_cd = main.intellectual_property_cd
+            LEFT JOIN sys_dictionary DEMO_012 ON DEMO_012.record_status = 1 AND DEMO_012.main_cd = 'DEMO_012' AND DEMO_012.sub_cd = main.state_cd
+            LEFT JOIN sys_dictionary SYS010 ON SYS010.record_status = 1 AND SYS010.main_cd = 'SYS010' AND SYS010.sub_cd = main.effective_cd 
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

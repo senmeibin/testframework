@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <!--获取我的跟进日程信息-->
+    <searchFollowupScheduler>
+        <![CDATA[
+        SELECT
+            '跟进'                          relation_type,
+            followup.uid                    relation_uid,
+            student.uid                     student_uid,
+            student.name                    student_name,
+            followup.next_followup_date     schedule_date,
+            followup.contents       contents
+        FROM
+            crm_followup followup
+            LEFT JOIN crm_student student ON student.uid = followup.student_uid
+        WHERE
+            followup.next_followup_date IS NOT NULL
+            AND followup.record_status = 1
+            ${dynamicCondition}
+        ORDER BY
+            followup.next_followup_date ASC
+        ]]>
+    </searchFollowupScheduler>
+</sql>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views">
+    <excludes>
+        <pattern>/static/*</pattern>
+        <pattern>/dwr/*</pattern>
+        <pattern>/error/*</pattern>
+        <pattern>/login*</pattern>
+        <pattern>/*.json</pattern>
+        <pattern>/demo/api/*</pattern>
+        <pattern>/auth/forcechangepassword</pattern>
+        <pattern>/auth/retrievepassword</pattern>
+        <pattern>/cmn/filepreview/*</pattern>
+    </excludes>
+
+    <decorator name="DefaultSys" page="DefaultSys.jsp">
+        <pattern>/sys/*</pattern>
+    </decorator>
+
+    <decorator name="DefaultCmn" page="DefaultCmn.jsp">
+        <pattern>/cmn/*</pattern>
+    </decorator>
+
+    <decorator name="DefaultPortal" page="DefaultPortal.jsp">
+        <pattern>/portal/*</pattern>
+    </decorator>
+
+    <decorator name="DefaultDemo" page="DefaultDemo.jsp">
+        <pattern>/demo/*</pattern>
+    </decorator>
+
+    <decorator name="DefaultEam" page="DefaultCrm.jsp">
+        <pattern>/crm/*</pattern>
+    </decorator>
+    
+        <decorator name="DefaultPms" page="DefaultPms.jsp">
+        <pattern>/pms/*</pattern>
+    </decorator>
+
+    <decorator name="Default" page="Default.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>

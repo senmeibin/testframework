@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.region_name
+            ,main.parent_uid
+            ,main.region_path
+            ,main.region_grade
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            cmn_region main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            (main.record_status = 1 OR main.record_status = 8)
+            %s
+        ORDER BY
+            main.region_grade,
+            main.disp_seq
+        ]]>
+    </search>
+
+    <!-- 只查询有效数据记录 -->
+    <searchValidRecord>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.region_name
+            ,main.parent_uid
+            ,main.region_path
+            ,main.region_grade
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            cmn_region main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+            %s
+        ORDER BY
+            main.region_grade,
+            main.disp_seq
+        ]]>
+    </searchValidRecord>
+
+    <!--取得省市区地域信息一览-->
+    <getRegionList>
+        <![CDATA[
+        SELECT
+            main.region_name     region_full_name,
+            main.province_uid,
+            province.region_name province_name,
+            main.city_uid,
+            city.region_name     city_name,
+            main.region_uid,
+            region.region_name
+        FROM
+            (
+                SELECT
+                    r.region_name,
+                    (CASE r.region_grade WHEN 1 THEN r.uid WHEN 2 THEN p.uid WHEN 3 THEN pp.uid ELSE NULL END) province_uid,
+                    (CASE r.region_grade WHEN 2 THEN r.uid WHEN 3 THEN p.uid ELSE NULL END) city_uid,
+                    (CASE r.region_grade WHEN 3 THEN r.uid ELSE NULL END) region_uid
+                FROM
+                    cmn_region r
+                    LEFT JOIN cmn_region p ON p.uid = r.parent_uid
+                    LEFT JOIN cmn_region pp ON pp.uid = p.parent_uid
+                UNION ALL
+                SELECT
+                     CONCAT(province.region_name, city.region_name) region_name,
+                     province.uid                                   province_uid,
+                     city.uid                                       city_uid,
+                     NULL                                           region_uid
+                FROM
+                    cmn_region city
+                    LEFT JOIN cmn_region province ON province.uid = city.parent_uid
+                WHERE
+                    city.region_grade = 2
+                UNION ALL
+                SELECT
+                    CONCAT(city.region_name, region.region_name) region_name,
+                    province.uid                                 province_uid,
+                    city.uid                                     city_uid,
+                    region.uid                                   region_uid
+                FROM cmn_region region
+                    LEFT JOIN cmn_region city ON city.uid = region.parent_uid
+                    LEFT JOIN cmn_region province ON province.uid = city.parent_uid
+                WHERE
+                    region.region_grade = 3
+                UNION ALL
+                SELECT
+                     CONCAT(province.region_name, city.region_name, region.region_name) region_name,
+                     province.uid                                                       province_uid,
+                     city.uid                                                           city_uid,
+                     region.uid                                                         region_uid
+                FROM
+                    cmn_region region
+                    LEFT JOIN cmn_region city ON city.uid = region.parent_uid
+                    LEFT JOIN cmn_region province ON province.uid = city.parent_uid
+                WHERE
+                    region.region_grade = 3
+            ) main
+            LEFT JOIN cmn_region region ON region.uid = main.region_uid
+            LEFT JOIN cmn_region city ON city.uid = main.city_uid
+            LEFT JOIN cmn_region province ON province.uid = main.province_uid
+        ORDER BY
+            LEN(main.region_name),
+            region_full_name
+        ]]>
+    </getRegionList>
+
+    <!-- 区域批量设置查询专用sql -->
+    <getRegionSettingList>
+        <![CDATA[
+        SELECT
+            *
+        FROM
+        (
+            SELECT
+                r.uid,
+                r.region_name,
+                (CASE r.region_grade WHEN 1 THEN r.uid WHEN 2 THEN p.uid WHEN 3 THEN pp.uid ELSE NULL END) province_uid,
+                (CASE r.region_grade WHEN 2 THEN r.uid WHEN 3 THEN p.uid ELSE NULL END) city_uid,
+                (CASE r.region_grade WHEN 3 THEN r.uid ELSE NULL END) region_uid,
+                r.record_status,
+                r.disp_seq,
+                r.parent_uid,
+                r.region_path,
+                r.region_grade,
+                r.remark,
+                r.insert_user,
+                r.update_user,
+                r.insert_date,
+                r.update_date
+            FROM
+                cmn_region r
+                LEFT JOIN cmn_region p ON p.uid = r.parent_uid
+                LEFT JOIN cmn_region pp ON pp.uid = p.parent_uid
+            WHERE
+                (r.record_status = 1 OR r.record_status = 8)
+        ) main
+        ]]>
+    </getRegionSettingList>
+
+    <!-- 修改区域记录状态 -->
+    <updateRegionRecordStatus>
+        <![CDATA[
+        UPDATE
+            cmn_region
+        SET
+            record_status = %s
+        WHERE
+            region_path LIKE %s
+        ]]>
+    </updateRegionRecordStatus>
+
+    <!--获取所有管辖城市信息-->
+    <getManageCityList>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.region_name
+            ,main.parent_uid
+            ,main.region_path
+            ,main.region_grade
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,belong_users.user_name belong_user_name
+        FROM
+            cmn_region main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            INNER JOIN sys_city_manage city_manage ON city_manage.city_uid = main.uid
+            LEFT JOIN sys_user belong_users ON belong_users.uid = city_manage.user_uid
+        WHERE
+            (main.record_status = 1 OR main.record_status = 8)
+            %s
+        ORDER BY
+            main.region_grade,
+            main.disp_seq
+        ]]>
+    </getManageCityList>
+</sql>

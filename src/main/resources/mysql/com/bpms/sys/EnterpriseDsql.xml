@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_name
+            ,main.abbreviation
+            ,main.logo
+            ,main.enterprise_label
+            ,main.legal_person_name
+            ,main.industry_cd
+            ,main.property_cd
+            ,main.scale_cd
+            ,main.province_uid
+            ,main.city_uid
+            ,main.region_uid
+            ,main.address
+            ,main.zipcode
+            ,main.telephone
+            ,main.fax
+            ,main.email
+            ,main.url
+            ,main.registered_capital
+            ,main.invoice_title
+            ,main.invoice_registered_address
+            ,main.invoice_telephone
+            ,main.invoice_bank
+            ,main.invoice_account_no
+            ,main.invoice_tax_no
+            ,main.contact_name
+            ,main.contact_telephone
+            ,main.contact_email
+            ,main.business_scope
+            ,main.introduction
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,SYS013.sub_name industry_name
+            ,SYS014.sub_name property_name
+            ,SYS015.sub_name scale_name
+        FROM 
+            sys_enterprise main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN sys_dictionary SYS013 ON SYS013.record_status = 1 AND SYS013.main_cd = 'SYS013' AND SYS013.sub_cd = main.industry_cd
+            LEFT JOIN sys_dictionary SYS014 ON SYS014.record_status = 1 AND SYS014.main_cd = 'SYS014' AND SYS014.sub_cd = main.property_cd
+            LEFT JOIN sys_dictionary SYS015 ON SYS015.record_status = 1 AND SYS015.main_cd = 'SYS015' AND SYS015.sub_cd = main.scale_cd
+        WHERE 
+            (main.record_status = 1 OR main.record_status = 8)
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

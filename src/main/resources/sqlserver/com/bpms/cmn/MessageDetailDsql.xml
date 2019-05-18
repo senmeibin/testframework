@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.message_uid
+            ,main.user_uid
+            ,main.read_type_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,CMN003.sub_name read_type_name
+            ,message.message_title
+            ,message.message_content
+            ,CMN002.sub_name importance_degree_name
+            ,dept.dept_name
+            ,users.user_name
+            ,users.user_cd
+            ,users.user_mail
+            ,users.user_phone
+            ,position.position_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            cmn_message_detail main
+            LEFT JOIN sys_dictionary CMN003 ON CMN003.record_status = 1 AND CMN003.main_cd = 'CMN003' AND CMN003.sub_cd = main.read_type_cd
+            LEFT JOIN sys_user users ON users.uid = main.user_uid
+            LEFT JOIN sys_dept dept ON users.dept_uid = dept.uid
+            LEFT JOIN sys_position position ON users.position_uid = position.uid
+            LEFT JOIN cmn_message message ON message.uid = main.message_uid
+            LEFT JOIN sys_dictionary CMN002 ON CMN002.record_status = 1 AND CMN002.main_cd = 'CMN002' AND CMN002.sub_cd = message.importance_degree_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

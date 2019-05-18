@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.process_id
+            ,main.user_name
+            ,main.host_name
+            ,main.database_name
+            ,main.execute_wait_time
+            ,main.execute_information
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            sys_database_process_operation_log main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+
+    <!--获取数据库的进程信息-->
+    <searchProcessInfo>
+        <![CDATA[
+        SELECT
+            main.id process_id
+            ,main.time execute_wait_time
+            ,main.host host_name
+            ,main.state execute_state
+            ,main.command execute_command
+            ,main.user user_name
+            ,main.db database_name
+            ,main.info execute_information
+        FROM
+            information_schema.PROCESSLIST main
+        WHERE
+            main.DB = (SELECT DATABASE())
+            AND main.info  IS  NOT  NULL
+            AND main.time > 5
+        ]]>
+    </searchProcessInfo>
+</sql>

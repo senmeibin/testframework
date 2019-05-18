@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <!--根据指定的表名称获取表元数据信息-->
+    <getDatabaseMetaData>
+        <![CDATA[
+        SELECT
+            sys.all_columns.name                as column_name,
+            sys.types.name                      as data_type,
+            is_identity                         as is_identity,
+            -- 0:not null/1:is null
+            sys.all_columns.is_nullable         as is_nullable,
+            sys.all_columns.max_length / 2      as character_maximum_length,
+            (
+                SELECT
+                    value
+                FROM
+                    sys.extended_properties WITH(NOLOCK)
+                WHERE
+                    sys.extended_properties.major_id = sys.all_columns.object_id
+                    AND sys.extended_properties.minor_id = sys.all_columns.column_id
+            ) as column_comment
+        FROM
+            sys.all_columns WITH(NOLOCK),
+            sys.types WITH(NOLOCK)
+        WHERE
+            object_id in
+            (
+                SELECT object_id
+                FROM sys.all_objects WITH(NOLOCK)
+                WHERE name = '%s'
+            )
+            AND sys.all_columns.system_type_id=sys.types.system_type_id
+            AND sys.types.name != 'sysname'
+        ORDER BY
+            object_id
+        ]]>
+    </getDatabaseMetaData>
+
+    <!--判断指定表中是否存在指定的字段-->
+    <fieldExistsInTable>
+        <![CDATA[
+        SELECT
+            name
+        FROM
+            syscolumns
+        WHERE
+            id = OBJECT_ID('%s')
+            AND name = '%s'
+        ]]>
+    </fieldExistsInTable>
+
+    <!--获取当前数据库下所有的表名-->
+    <getAllTableNames>
+        <![CDATA[
+        SELECT
+            name
+        FROM
+            sysobjects
+        where
+            xtype = 'U'
+        ORDER BY
+            name
+        ]]>
+    </getAllTableNames>
+
+    <!--取得指定表、指定字段数据列表【下拉框内容填充专用】-->
+    <getDropdownList>
+        <![CDATA[
+        SELECT
+            CAST(%s AS NVARCHAR(512)) sub_cd,
+            %s sub_name
+        FROM
+            %s main
+        ]]>
+    </getDropdownList>
+</sql>

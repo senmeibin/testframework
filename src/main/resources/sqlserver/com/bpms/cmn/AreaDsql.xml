@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.area_cd
+            ,main.area_name
+            ,main.dept_uid
+            ,dept.dept_name
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            cmn_area main
+            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid AND dept.dept_class = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+        ]]>
+    </search>
+
+    <!-- 查看大区是否被城市引用 -->
+    <checkDelete>
+        <![CDATA[
+        SELECT
+            TOP 1 *
+        FROM
+            cmn_city city
+            LEFT JOIN cmn_area area ON area.uid = city.area_uid
+        WHERE
+            city.record_status = 1
+            %s
+        ]]>
+    </checkDelete>
+</sql>

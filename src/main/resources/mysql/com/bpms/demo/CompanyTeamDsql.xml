@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.name
+            ,main.birth_date
+            ,main.dept
+            ,main.position
+            ,main.phone
+            ,main.fax
+            ,main.mobile
+            ,main.certificate_type_cd
+            ,main.certificate_no
+            ,main.mail
+            ,main.education_cd
+            ,main.highest_job_title
+            ,main.first_working_year
+            ,main.shareholders_cd
+            ,main.actual_person_cd
+            ,main.continuous_business_cd
+            ,main.entrepreneur_feature
+            ,main.thousands_plans_cd
+            ,main.thousands_plans_no
+            ,main.college_technology_enterprises_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_009.sub_name certificate_type_name
+            ,DEMO_010.sub_name education_name
+            ,SYS010_2.sub_name shareholders_name
+            ,SYS010_3.sub_name actual_person_name
+            ,SYS010_4.sub_name continuous_business_name
+            ,SYS010_5.sub_name thousands_plans_name
+            ,SYS010_6.sub_name college_technology_enterprises_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_team main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_009 ON DEMO_009.record_status = 1 AND DEMO_009.main_cd = 'DEMO_009' AND DEMO_009.sub_cd = main.certificate_type_cd
+            LEFT JOIN sys_dictionary DEMO_010 ON DEMO_010.record_status = 1 AND DEMO_010.main_cd = 'DEMO_010' AND DEMO_010.sub_cd = main.education_cd
+            LEFT JOIN sys_dictionary SYS010_2 ON SYS010_2.record_status = 1 AND SYS010_2.main_cd = 'SYS010' AND SYS010_2.sub_cd = main.shareholders_cd
+            LEFT JOIN sys_dictionary SYS010_3 ON SYS010_3.record_status = 1 AND SYS010_3.main_cd = 'SYS010' AND SYS010_3.sub_cd = main.actual_person_cd
+            LEFT JOIN sys_dictionary SYS010_4 ON SYS010_4.record_status = 1 AND SYS010_4.main_cd = 'SYS010' AND SYS010_4.sub_cd = main.continuous_business_cd
+            LEFT JOIN sys_dictionary SYS010_5 ON SYS010_5.record_status = 1 AND SYS010_5.main_cd = 'SYS010' AND SYS010_5.sub_cd = main.thousands_plans_cd
+            LEFT JOIN sys_dictionary SYS010_6 ON SYS010_6.record_status = 1 AND SYS010_6.main_cd = 'SYS010' AND SYS010_6.sub_cd = main.college_technology_enterprises_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

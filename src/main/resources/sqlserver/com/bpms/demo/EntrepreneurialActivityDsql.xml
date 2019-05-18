@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.activity_no
+            ,main.base_uid
+            ,base.base_name
+            ,main.activity_topic
+            ,main.conference_role_cd
+            ,main.service_type_cd
+            ,main.activity_location
+            ,main.service_content_cd
+            ,main.activity_type_cd
+            ,main.activity_number
+            ,main.activity_summary
+            ,main.start_time
+            ,main.end_time
+            ,main.weeks
+            ,main.person_in_charge_uid
+            ,person.user_name person_in_charge_name
+            ,main.activity_amount
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_018.sub_name conference_role_name
+            ,DEMO_019.sub_name service_type_name
+            ,DEMO_020.sub_name service_content_name
+            ,DEMO_021.sub_name activity_type_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,tutor.tutor_uid
+            ,tutor.tutor_name
+        FROM
+            demo_entrepreneurial_activity main
+            LEFT JOIN demo_base_info base ON base.uid = main.base_uid AND base.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_018 ON DEMO_018.record_status = 1 AND DEMO_018.main_cd = 'DEMO_018' AND DEMO_018.sub_cd = main.conference_role_cd
+            LEFT JOIN sys_dictionary DEMO_019 ON DEMO_019.record_status = 1 AND DEMO_019.main_cd = 'DEMO_019' AND DEMO_019.sub_cd = main.service_type_cd
+            LEFT JOIN sys_dictionary DEMO_020 ON DEMO_020.record_status = 1 AND DEMO_020.main_cd = 'DEMO_020' AND DEMO_020.sub_cd = main.service_content_cd
+            LEFT JOIN sys_dictionary DEMO_021 ON DEMO_021.record_status = 1 AND DEMO_021.main_cd = 'DEMO_021' AND DEMO_021.sub_cd = main.activity_type_cd
+            LEFT JOIN sys_user person ON person.record_status = 1 AND person.uid = main.person_in_charge_uid
+            LEFT JOIN
+                (
+                    SELECT
+                        tutor_uid = STUFF((SELECT ',' + tmp1.tutor_uid FROM demo_entrepreneurial_activity_tutor tmp1 WHERE tmp1.entrepreneurial_activity_uid = t.entrepreneurial_activity_uid FOR XML PATH('')), 1, 1, ''),
+                        tutor_name = STUFF((SELECT ',' + tmp2.tutor_name FROM demo_entrepreneurial_activity_tutor tmp1, demo_tutor tmp2  WHERE tmp2.record_status = 1 AND tmp2.uid = tmp1.tutor_uid AND tmp1.entrepreneurial_activity_uid = t.entrepreneurial_activity_uid FOR XML PATH('')), 1, 1, ''),
+                        t.entrepreneurial_activity_uid
+                    FROM
+                        demo_entrepreneurial_activity_tutor t
+                        LEFT JOIN demo_tutor tutor ON tutor.record_status = 1 AND tutor.uid = t.tutor_uid
+                    WHERE
+                        t.record_status = 1
+                    GROUP BY
+                        t.entrepreneurial_activity_uid
+                ) tutor ON tutor.entrepreneurial_activity_uid = main.uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

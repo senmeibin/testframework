@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,main.main_cd
+            ,main.sub_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_005.sub_name main_name
+            ,DEMO_006.sub_name sub_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_attribute_details main
+            LEFT JOIN sys_dictionary DEMO_005 ON DEMO_005.record_status = 1 AND DEMO_005.main_cd = 'DEMO_005' AND DEMO_005.sub_cd = main.main_cd
+            LEFT JOIN sys_dictionary DEMO_006 ON DEMO_006.record_status = 1 AND DEMO_006.main_cd = 'DEMO_006' AND DEMO_006.sub_cd = main.sub_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

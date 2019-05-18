@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_name
+            ,main.organization_no
+            ,main.registered_province_uid
+            ,province.region_name registered_province_name
+            ,main.registered_city_uid
+            ,city.region_name registered_city_name
+            ,main.registered_area_uid
+            ,area.region_name registered_area_name
+            ,main.registered_address
+            ,main.establishment_date
+            ,main.registered_capital
+            ,main.base_uid
+            ,base.base_name
+            ,main.company_principal
+            ,main.principal_phone
+            ,main.principal_mail
+            ,main.contact_person
+            ,main.contact_phone
+            ,main.contact_mail
+            ,main.office_address
+            ,main.office_postal_code
+            ,main.registration_type_cd
+            ,main.high_tech_type
+            ,main.industry_category
+            ,main.professional_technical_cd
+            ,main.website
+            ,main.company_profile
+            ,main.contact_content
+            ,main.principal
+            ,main.follow_up_scheme
+            ,main.company_type_cd
+            ,main.entry_probability_cd
+            ,main.investment_channels_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_001.sub_name registration_type_name
+            ,DEMO_002.sub_name professional_technical_name
+            ,DEMO_016.sub_name company_type_name
+            ,DEMO_017.sub_name entry_probability_name
+            ,DEMO_035.sub_name investment_channels_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_potential_customer main
+            LEFT JOIN sys_dictionary DEMO_001 ON DEMO_001.record_status = 1 AND DEMO_001.main_cd = 'DEMO_001' AND DEMO_001.sub_cd = main.registration_type_cd
+            LEFT JOIN sys_dictionary DEMO_002 ON DEMO_002.record_status = 1 AND DEMO_002.main_cd = 'DEMO_002' AND DEMO_002.sub_cd = main.professional_technical_cd
+            LEFT JOIN sys_dictionary DEMO_016 ON DEMO_016.record_status = 1 AND DEMO_016.main_cd = 'DEMO_016' AND DEMO_016.sub_cd = main.company_type_cd
+            LEFT JOIN sys_dictionary DEMO_017 ON DEMO_017.record_status = 1 AND DEMO_017.main_cd = 'DEMO_017' AND DEMO_017.sub_cd = main.entry_probability_cd
+            LEFT JOIN sys_dictionary DEMO_035 ON DEMO_035.record_status = 1 AND DEMO_035.main_cd = 'DEMO_035' AND DEMO_035.sub_cd = main.investment_channels_cd
+            LEFT JOIN cmn_region province ON province.record_status = 1 AND province.uid  = main.registered_province_uid
+            LEFT JOIN cmn_region city ON city.record_status = 1 AND city.uid  = main.registered_city_uid
+            LEFT JOIN cmn_region area ON area.record_status = 1 AND area.uid  = main.registered_area_uid
+            LEFT JOIN demo_base_info base ON base.record_status = 1 AND base.uid = main.base_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

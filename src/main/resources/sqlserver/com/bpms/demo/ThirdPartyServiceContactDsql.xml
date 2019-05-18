@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.base_uid
+            ,base.base_name
+            ,main.company_name
+            ,main.service_content
+            ,main.service_type
+            ,main.third_party_service_tag
+            ,main.evaluate_status_cd
+            ,DEMO_024.sub_name evaluate_status_name
+            ,main.evaluate
+            ,main.service_date
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,docking.service_count
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM
+            demo_third_party_service_contact main
+            LEFT JOIN demo_base_info base ON base.record_status = 1 AND base.uid = main.base_uid
+            LEFT JOIN sys_dictionary DEMO_024 ON DEMO_024.record_status = 1 AND DEMO_024.main_cd = 'DEMO_024' AND DEMO_024.sub_cd = main.evaluate_status_cd
+            LEFT JOIN (
+                SELECT
+                    COUNT(1) service_count
+                    ,third_party_service_uid
+                FROM
+                    demo_resources_docking_record
+                WHERE
+                    record_status = 1
+                GROUP BY third_party_service_uid) docking
+            ON docking.third_party_service_uid = main.uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

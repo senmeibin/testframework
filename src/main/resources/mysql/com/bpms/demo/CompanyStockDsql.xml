@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.shareholder_type_cd
+            ,main.shareholder_name
+            ,main.certificate_type_cd
+            ,main.listed_company_cd
+            ,main.thousands_people_plan_cd
+            ,main.shares_proportion
+            ,main.total_investment
+            ,main.overseas_company_cd
+            ,main.total_share_foreign_capital
+            ,main.total_shares_listed_company
+            ,main.fund_company_cd
+            ,main.first_investment_date
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_008.sub_name shareholder_type_name
+            ,DEMO_009.sub_name certificate_type_name
+            ,SYS010_1.sub_name listed_company_name
+            ,SYS010_2.sub_name thousands_people_plan_name
+            ,SYS010_3.sub_name overseas_company_name
+            ,SYS010_4.sub_name fund_company_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_stock main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_008 ON DEMO_008.record_status = 1 AND DEMO_008.main_cd = 'DEMO_008' AND DEMO_008.sub_cd = main.shareholder_type_cd
+            LEFT JOIN sys_dictionary DEMO_009 ON DEMO_009.record_status = 1 AND DEMO_009.main_cd = 'DEMO_009' AND DEMO_009.sub_cd = main.certificate_type_cd
+            LEFT JOIN sys_dictionary SYS010_1 ON SYS010_1.record_status = 1 AND SYS010_1.main_cd = 'SYS010' AND SYS010_1.sub_cd = main.listed_company_cd
+            LEFT JOIN sys_dictionary SYS010_2 ON SYS010_2.record_status = 1 AND SYS010_2.main_cd = 'SYS010' AND SYS010_2.sub_cd = main.thousands_people_plan_cd
+            LEFT JOIN sys_dictionary SYS010_3 ON SYS010_3.record_status = 1 AND SYS010_3.main_cd = 'SYS010' AND SYS010_3.sub_cd = main.overseas_company_cd
+            LEFT JOIN sys_dictionary SYS010_4 ON SYS010_4.record_status = 1 AND SYS010_4.main_cd = 'SYS010' AND SYS010_4.sub_cd = main.fund_company_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

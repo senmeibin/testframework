@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.total_assets
+            ,main.total_liabilities
+            ,main.total_fixed_assets
+            ,main.total_completed_assets
+            ,main.particular_year
+            ,main.business_income
+            ,main.main_business_income
+            ,main.high_tech_income
+            ,main.software_services_income
+            ,main.gross_output
+            ,main.high_tech_output
+            ,main.independent_output
+            ,main.increase_value
+            ,main.export_earnings
+            ,main.rd_investment
+            ,main.high_tech_products_outlet
+            ,main.after_tax_profits
+            ,main.total_tax
+            ,main.added_value_tax
+            ,main.business_tax
+            ,main.income_tax
+            ,main.personal_income_tax
+            ,main.other_tax
+            ,main.total_deductions_tax
+            ,main.deductions_added_value_tax
+            ,main.deductions_business_tax
+            ,main.deductions_income_tax
+            ,main.deductions_rd_tax
+            ,main.deductions_high_tech_tax
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_financial main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

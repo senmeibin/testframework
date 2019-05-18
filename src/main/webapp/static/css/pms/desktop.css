@@ -1,0 +1,2188 @@
+h1, h2, h3, h4, h5, h6, ul, li, label, p {
+    margin: 0;
+    padding: 0;
+}
+
+em, i {
+    font-style: normal;
+}
+
+input:focus, button:focus {
+    outline: none;
+}
+
+.data-not-exist {
+    color: #ccc;
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+/*工作台TAB*/
+.desktop-tab {
+    height: 40px;
+    border-bottom: 1px solid #ddd;
+    padding-top: 5px;
+    overflow: hidden;
+}
+
+.desktop-tab li {
+    margin-left: 10px;
+    position: relative;
+}
+
+.desktop-tab li + li {
+    margin-left: 2px;
+}
+
+.desktop-tab li em {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.desktop-tab li a {
+    height: 34px;
+    background-color: #e6e6e6;
+    border-radius: 0;
+    color: #666;
+    padding: 0 15px 0 10px;
+}
+
+.desktop-tab li a i {
+    font-size: 14px;
+    display: block;
+    float: left;
+    margin-top: 11px;
+    margin-right: 0;
+}
+
+.desktop-tab li a i.fa {
+    padding-right: 3px;
+}
+
+.desktop-tab li a span {
+    display: block;
+    float: left;
+    line-height: 34px;
+}
+
+.desktop-tab li a:hover i,
+.desktop-tab li a:hover {
+    color: #fff;
+}
+
+.desktop-tab li.active a,
+.desktop-tab li.active a:focus,
+.desktop-tab li.active a:hover {
+    background-color: #09c;
+}
+
+.desktop-tab li.active em {
+    color: #fff;
+}
+
+.desktop-tab li:hover em {
+    color: #fff;
+}
+
+.desktop-tab li:hover em:hover {
+    color: red;
+}
+
+.desktop-tab li.active:hover em:hover {
+    color: #fff;
+}
+
+/*学员详情滚动区*/
+.student-detail {
+    position: relative;
+    padding: 0 10px 0 0;
+}
+
+.desktop-left {
+    color: #555;
+}
+
+.desktop-left > div {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0px 5px 5px;
+    line-height: 24px;
+    position: relative;
+    border-left: 2px solid #fff;
+}
+
+/*鼠标经过-背景变色*/
+.desktop-left > div:hover {
+    background-color: #f7f7f7;
+    border-left: 2px solid #09c;
+}
+
+.desktop-left > div:hover .call-phone,
+.desktop-left > div:hover .call-wechat {
+    background-color: #5cb85c;
+}
+
+/*标头*/
+.desktop-left > div > h4, .desktop-left > div > h5 {
+    color: #09c;
+    padding: 10px 0px;
+}
+
+.desktop-left > div > h4 {
+    font-size: 24px;
+}
+
+.desktop-left > div > h5 {
+    font-size: 14px;
+}
+
+.desktop-left > div > h5 i {
+    width: 20px;
+    text-align: center;
+}
+
+.desktop-left > div > h4 strong,
+.desktop-left > div > h5 strong {
+    padding-left: 5px;
+}
+
+.desktop-left > div > h4 strong {
+    font-weight: normal;
+}
+
+.desktop-left > div > h5 em {
+    color: #aaa;
+    padding-left: 10px;
+    padding-right: 10px;
+    float: right;
+    font-size: 18px;
+}
+
+/*内容排版*/
+.desktop-left li {
+    line-height: 30px;
+    clear: both;
+}
+
+.desktop-left li strong {
+    font-size: 14px;
+}
+
+.desktop-left ul > li label {
+    display: block;
+    float: left;
+    width: 75px;
+    color: #aaa;
+}
+
+.desktop-left ul > li > div {
+    overflow: hidden;
+}
+
+.desktop-right h5 {
+    margin-top: 10px;
+    color: #09c;
+    padding: 10px 0px;
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+}
+
+.desktop-right .add-button {
+    float: right;
+    margin-left: 15px;
+    margin-top: 20px;
+    color: #00c309;
+}
+
+.desktop-right h5 i {
+    width: 20px;
+    text-align: center;
+}
+
+/*展开更多 工作经历等*/
+.expand-more {
+    text-align: right;
+}
+
+.expand-more a,
+.expand-more a:hover,
+.expand-more a:focus,
+.expand-more a i {
+    font-size: 12px;
+    color: #0D5995;
+}
+
+/*展开更多 项目经验*/
+.expand-more-project {
+    text-align: right;
+}
+
+.expand-more-project a,
+.expand-more-project a:hover,
+.expand-more-project a:focus,
+.expand-more-project a i {
+    font-size: 12px;
+    color: #0D5995;
+}
+
+/*展开更多 教育经历*/
+.expand-more-education {
+    text-align: right;
+}
+
+.expand-more-education a,
+.expand-more-education a:hover,
+.expand-more-education a:focus,
+.expand-more-education a i {
+    font-size: 12px;
+    color: #0D5995;
+}
+
+/*展开更多 工作经历*/
+.expand-more-work {
+    text-align: right;
+}
+
+.expand-more-work a,
+.expand-more-work a:hover,
+.expand-more-work a:focus,
+.expand-more-work a i {
+    font-size: 12px;
+    color: #0D5995;
+}
+
+/*展开更多 跟进记录*/
+.followup-record-more a,
+.followup-record-more a:hover,
+.followup-record-more a:focus {
+    text-decoration: none;
+    color: #2e6da4;
+}
+
+.followup-record-more a i,
+.followup-record-more {
+    text-align: right;
+    margin-bottom: -10px;
+}
+
+/*展开更多 推荐记录*/
+.expand-more-record a,
+.expand-more-record a:hover,
+.expand-more-record a:focus {
+    text-decoration: none;
+    color: #2e6da4;
+}
+
+.expand-more-record a i,
+.expand-more-record {
+    text-align: right;
+    margin-bottom: -10px;
+}
+
+/*展开更多 投递记录（香草）*/
+.expand-more-record-xc a,
+.expand-more-record-xc a:hover,
+.expand-more-record-xc a:focus {
+    text-decoration: none;
+    color: #2e6da4;
+}
+
+.expand-more-record-xc a i,
+.expand-more-record-xc {
+    text-align: right;
+    margin-bottom: -10px;
+}
+
+/*折叠-隐藏*/
+.content-folding {
+    cursor: pointer;
+}
+
+.desktop-left > div > div {
+    display: none;
+    overflow: hidden;
+    padding: 0px;
+}
+
+.desktop-left > div > div.active {
+    display: block;
+}
+
+/*跟进记录*/
+.followup-record li {
+    float: none;
+    clear: both;
+    width: 100%;
+    border-top: 1px dotted #CDCDCD;
+    padding: 5px 0 !important;
+}
+
+.followup-record em {
+    color: #2e6da4;
+    padding-right: 5px;
+}
+
+.followup-record-right {
+    float: right;
+    width: 100px;
+    text-align: right;
+    color: #aaa;;
+}
+
+.followup-record-right span {
+    color: #aaa;
+}
+
+.followup-record-left {
+    overflow: hidden;
+    float: left;
+}
+
+.followup-record-left .pull-right {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+    text-align: right;
+}
+
+.followup-record-left .pull-left {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+}
+
+/*推荐记录*/
+.recommend-record li {
+    float: none;
+    width: 100%;
+}
+
+.recommend-record em {
+    color: #2e6da4;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.recommend-record-xc-right,
+.recommend-record-right {
+    float: right;
+    width: 37%;
+    text-align: right;
+}
+
+.recommend-record-xc-right em,
+.recommend-record-right em {
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+}
+
+.recommend-record-xc-right span,
+.recommend-record-right span {
+    color: #aaa;
+    float: right;
+    width: 80px;
+    text-align: right;
+    display: block;
+}
+
+.recommend-record-left {
+    overflow: hidden;
+}
+
+.recommend-record-left .pull-right {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+    text-align: right;
+}
+
+.recommend-record-left .pull-left {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+}
+
+/*投递记录 香草*/
+.recommend-record-xc li {
+    float: none;
+    width: 100%;
+}
+
+.recommend-record-xc em {
+    color: #2e6da4;
+}
+
+.recommend-record-xc-left {
+    overflow: hidden;
+}
+
+.recommend-record-xc-left .pull-right {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+    text-align: right;
+}
+
+.recommend-record-xc .pull-left {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+}
+
+/*划转记录*/
+.student-assign-log li {
+    float: none;
+    width: 100%;
+}
+
+.student-assign-log em {
+    color: #2e6da4;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.student-assign-log-right {
+    float: right;
+    width: 37%;
+    text-align: right;
+}
+
+.student-assign-log-right em {
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+}
+
+.student-assign-log-right span {
+    color: #aaa;
+    float: right;
+    width: 68px;
+    text-align: right;
+    display: block;
+}
+
+.student-assign-log-left {
+    overflow: hidden;
+}
+
+.student-assign-log-left .pull-right {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+    text-align: right;
+}
+
+.student-assign-log-left .pull-left {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 50%;
+}
+
+/*工作经历*/
+.user-content li > i {
+    font-size: 18px;
+    color: #aaa;
+    display: block;
+    float: left;
+    margin-top: 4px;
+}
+
+.user-content li > i.fa-mobile {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+/*学员标签*/
+.feature-label li {
+    width: auto;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 0 20px;
+    margin-right: 10px;
+}
+
+/*跟进记录编辑*/
+.desktop-tag-container {
+    padding: 10px 0;
+}
+
+.desktop-tag-container > ul {
+    padding-left: 20px;
+}
+
+.label-click-select {
+    overflow: hidden;
+}
+
+.desktop-tag-container li {
+    width: 100%;
+    float: none;
+    line-height: 30px;
+}
+
+.label-click-select > li {
+    width: 50%;
+    float: left;
+    line-height: 34px;
+}
+
+.label-click-select > li > label,
+.desktop-tag-container li label {
+    float: left;
+    width: 65px;
+}
+
+.desktop-tag-container > ul > li > div,
+.desktop-tag-container > ul > li > label {
+    padding: 5px 0;
+}
+
+.label-click-select > li > div > span {
+    border: 1px solid #ddd;
+    line-height: 24px;
+    display: inline-block;
+    padding: 0 10px;
+    border-radius: 3px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.label-click-select li span i {
+    display: none;
+    margin-right: -5px;
+}
+
+.label-click-select li span.active {
+    border-color: #09c;
+    color: #09c;
+}
+
+.label-click-select li span.active i {
+    display: inline-block;
+}
+
+.follow-record-edit > div {
+    padding: 0 10px 0 0;
+}
+
+button.recommend-button {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+}
+
+button.details-button {
+    border: none;
+}
+
+.position-iscroll-list li:hover .position-iscroll-list-block h6 {
+    background-color: #09c;
+}
+
+.position-iscroll-list li:hover .position-iscroll-list-block p {
+    background-color: #4ab5d9;
+}
+
+.position-iscroll-list li:hover .position-iscroll-list-block h6,
+.position-iscroll-list li:hover .position-iscroll-list-block h6 em,
+.position-iscroll-list li:hover .position-iscroll-list-block,
+.position-iscroll-list li:hover .details-button i:hover {
+    color: #fff;
+}
+
+.position-iscroll-list li:hover .position-iscroll-list-block button.recommend-button {
+    border-color: #fff;
+}
+
+/*Dashboard数据区*/
+.dashboard-container {
+    border-left: 1px solid #eee;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 21;
+    display: none;
+}
+
+.dashboard-container ul {
+    padding: 5px 0;
+}
+
+.dashboard-container li {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-left: 4px solid #09c;
+    margin: 5px 20px;
+}
+
+.dashboard-container li em {
+    font-size: 26px;
+    display: inline-block;
+    min-width: 35%;
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.dashboard-container li em a {
+    color: #09c;
+}
+
+.dashboard-container li .title {
+    color: #767676;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+.dashboard-container li p {
+    line-height: 20px;
+}
+
+.dashboard-container li span {
+    background-color: #ccc;
+    width: 2px;
+    height: 20px;
+    display: inline-block;
+}
+
+.dashboard-container li:hover {
+    background-color: #09c;
+    border: 1px solid #09c;
+    border-left: 4px solid #09c;
+}
+
+.dashboard-container li:hover p,
+.dashboard-container li:hover em a,
+.dashboard-container li:hover em {
+    color: #fff;
+}
+
+.dashboard-container li:hover em a {
+    text-decoration: underline;
+}
+
+.dashboard-container li:hover span {
+    background-color: #fff;
+}
+
+/*工作台查询条件*/
+.desktop-search-condition {
+    padding: 10px 0;
+}
+
+/*工作台列表样式*/
+.desktop-list {
+    border-top: 1px solid #eee;
+    margin-right: 15px;
+}
+
+.desktop-list li {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+    padding: 15px 5px;
+}
+
+.desktop-list li label.client-logo {
+    width: 80px;
+    height: 80px;
+    float: left;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.desktop-list li label.client-logo img {
+    height: 79px;
+}
+
+.desktop-list li > div {
+    overflow: hidden;
+    padding-left: 10px;
+    font-size: 12px;
+    min-width: 62px;
+}
+
+.desktop-list li > div h4 {
+    padding-bottom: 3px;
+    line-height: 30px;
+}
+
+.desktop-list li > div h4 button {
+    font-size: 12px;
+    background-color: transparent;
+    color: red;
+    height: 24px;
+    border: 1px solid red;
+    padding: 0 10px;
+    line-height: 22px;
+    margin-left: 15px;
+    border-radius: 3px;
+}
+
+.desktop-list li > div h4 button i {
+    color: red;
+    padding-right: 5px;
+}
+
+.desktop-list li > div a {
+    color: #000;
+}
+
+.desktop-list li > div h4 strong {
+    color: #000;
+    font-weight: normal;
+}
+
+.desktop-list li > div h4 > span {
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.desktop-list li > div h4 > span i.fa-eye {
+    color: #09c;
+    display: none;
+    padding-right: 10px;
+    font-size: 16px;
+}
+
+.desktop-list li.active > div h4 > span i.fa-eye {
+    color: #09c;
+    display: inline-block;
+}
+
+.desktop-list li.active > div h4 a {
+    color: #09c;
+}
+
+.desktop-list li > div p {
+    line-height: 30px;
+}
+
+.desktop-list li > div p a, .desktop-list li > div p a:focus {
+    color: #aaa;
+}
+
+.desktop-list li > div p a:hover {
+    color: #0D5995;
+}
+
+.desktop-list li > div p i.fa-eye {
+    display: none;
+}
+
+.desktop-list li > div p.active i.fa-eye {
+    display: inline-block;
+    color: #09c;
+}
+
+.desktop-list li > div.desktop-innner-list-lower-right-corner {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+}
+
+.desktop-innner-list-lower-right-corner > button,
+.desktop-innner-list-lower-right-corner > span {
+    display: block;
+    float: left;
+}
+
+.desktop-innner-list-lower-right-corner > span {
+    padding-right: 20px;
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+}
+
+.desktop-innner-list-lower-right-corner > span i {
+    color: #09c;
+    font-size: 16px;
+    padding: 0 4px;
+}
+
+.desktop-innner-list-lower-right-corner > span a i {
+    margin-right: 0;
+}
+
+.desktop-list li h3 {
+    font-size: 14px;
+    padding-bottom: 10px;
+    color: #999;
+}
+
+.desktop-list li h3 span {
+    color: #000;
+}
+
+.desktop-list li label.user-photo {
+    width: 60px;
+    height: 60px;
+    float: left;
+}
+
+.desktop-list li label.user-photo img {
+    width: 100%;
+}
+
+.call-wechat, .call-phone, .up-phone {
+    border: none;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin-left: 0px;
+    color: #fff;
+    background-color: #ccc;
+    display: inline-block;
+    border-radius: 3px;
+}
+
+.up-phone {
+    background-color: red;
+}
+
+.call-phone i {
+    color: #fff;
+}
+
+.up-phone i {
+    transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+}
+
+.call-wechat i, .call-phone i, .up-phone i {
+    display: block;
+    margin-top: 2px;
+}
+
+.call-wechat i {
+    margin-left: 2px;
+    color: #fff;
+}
+
+.up-phone i:hover {
+    color: #fff;
+}
+
+.desktop-list-active li:hover .call-phone {
+    background-color: #2eb618;
+}
+
+.call-phone-float {
+    position: absolute;
+    bottom: 17px;
+    left: 183px;
+    background-color: #fff;
+    border-radius: 3px;
+    display: none;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.call-phone-float button {
+    background-color: #5cb85c;
+    color: #fff;
+    border: 0;
+    height: 23px;
+    line-height: 23px;
+    font-size: 12px;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+
+.call-phone-float button:hover {
+    background-color: #39a139;
+}
+
+/*鼠标经过，按钮颜色*/
+.desktop-innner-list-lower-right-corner > button {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.desktop-innner-list-lower-right-corner > button span {
+    font-size: 14px;
+    color: #999;
+    margin-top: -4px;
+    display: block;
+    float: left;
+}
+
+.desktop-innner-list-lower-right-corner > button i {
+    color: #ccc;
+    display: block;
+    float: left;
+}
+
+.desktop-list-active li:hover .student-red i {
+    color: red;
+}
+
+.desktop-list-active li:hover .student-blue span,
+.desktop-list-active li:hover .student-blue i {
+    color: #09c;
+}
+
+/*学员列表-鼠标悬浮效果*/
+.desktop-list-active li {
+    border-left: 2px solid #fff;
+}
+
+.desktop-list-active li:hover {
+    background-color: #f7f7f7;
+    border-left: 2px solid #09c;
+}
+
+.desktop-list-active li:hover .desktop-innner-list-lower-right-corner a {
+    border-bottom: 2px solid #09c;
+}
+
+.desktop-list-active li:hover .hover-underline {
+    border-bottom: 1px solid #333;
+}
+
+.desktop-list-active li.active:hover h4 a {
+    border-color: #09c;
+}
+
+/*侧边栏折叠*/
+.right-side-fold {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    z-index: 19;
+}
+
+.right-side-fold button {
+    width: 12px;
+    height: 40px;
+    background-color: #09c;
+    border: none;
+    color: #fff;
+    padding: 0;
+    font-size: 1.4em;
+}
+
+.right-side-fold button i {
+    color: #fff;
+}
+
+/*人才库*/
+.talent-pool {
+    padding-right: 10px;
+}
+
+.talent-pool .tab-content {
+    position: relative;
+    margin-top: 5px;
+}
+
+.talent-pool .nav-pills {
+    background-color: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    margin-top: 10px;
+}
+
+.talent-pool .nav-pills li + li {
+    margin: 0;
+}
+
+.talent-pool .nav-pills li a {
+    border-right: 1px solid #e8e8e8;
+    color: #666;
+    width: 110px;
+    text-align: center;
+    line-height: 38px;
+    padding: 0;
+}
+
+.talent-pool .nav-pills li.active a {
+    background-color: #fff;
+    color: #09c;
+    border-radius: 0;
+    font-weight: bold;
+}
+
+.talent-pool .nav-pills li a:hover {
+    background-color: #fff;
+    color: #09c;
+    border-radius: 0;
+}
+
+.talent-pool .nav-pills li a i {
+    position: absolute;
+    bottom: -12px;
+    font-size: 1.5em;
+    left: 50%;
+    color: #ccc;
+    margin-left: -5px;
+    display: none;
+}
+
+.talent-pool .nav-pills li.active a i {
+    display: block;
+}
+
+.statistical-value {
+    position: absolute;
+    top: -33px;
+    right: 10px;
+}
+
+.statistical-value span {
+    padding: 0 8px;
+}
+
+.statistical-value span strong {
+    color: red;
+}
+
+/*操作台-录入去-隐藏按钮*/
+.student-record-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.student-record-button button {
+    background-color: #09c;
+    color: #fff;
+    border: none;
+}
+
+.student-record-button button span {
+    padding-left: 5px;
+}
+
+.desktop-innner-list-upper-right-corner {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.desktop-innner-list-upper-right-corner button {
+    padding: 0 0;
+}
+
+.desktop-innner-list-upper-right-corner button i {
+    font-size: 1.4em;
+    color: #ccc;
+}
+
+.desktop-list-active li:hover .desktop-innner-list-upper-right-corner button i {
+    color: #09c;
+}
+
+@media (max-width: 1500px) {
+    .dashboard-container li {
+        margin: 5px 10px;
+    }
+
+    .recruit-state .pull-right p {
+        width: 370px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .recruit-state .pull-right h5 {
+        width: 370px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .xiangcao-active .pull-right p {
+        width: 450px;
+    }
+
+    .list-keyword-input {
+        width: 320px !important;
+    }
+}
+
+/*地铁站点选择*/
+.subway-site {
+    line-height: 24px;
+}
+
+.subway-site-head {
+    padding: 5px 160px 5px 10px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.subway-site-head strong {
+    padding: 6px 10px 6px 0;
+    display: block;
+    float: left;
+}
+
+.subway-site-head span {
+    border: 1px solid #09c;
+    color: #09c;
+    border-radius: 3px;
+    display: block;
+    float: left;
+    padding: 0 5px 0 10px;
+    width: auto;
+    margin: 5px;
+    height: 26px;
+}
+
+.subway-site-head span em {
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.subway-site-head span i {
+    padding-left: 5px;
+}
+
+.subway-site-head span i:hover {
+    color: red;
+}
+
+.subway-site-content {
+}
+
+.subway-site-content h5 {
+    line-height: 30px;
+    padding-top: 5px;
+}
+
+.subway-site-content .col-xs-2 {
+    border-right: 1px solid #ddd;
+}
+
+.subway-site-content .col-xs-2 p {
+    height: 300px;
+    overflow: auto;
+}
+
+.subway-site-content p {
+    text-align: center;
+}
+
+.subway-site-content p span {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    float: left;
+    padding: 0 10px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.city-select p span {
+    width: 80px;
+}
+
+.subway-select p span {
+    width: 140px;
+}
+
+.subway-site-content p span i {
+    display: none;
+}
+
+.subway-site-content p span.active {
+    border-color: #09c;
+    color: #09c;
+}
+
+.subway-site-content p span:hover {
+    background-color: #f5f5f5;
+}
+
+.subway-site-content p span.active i {
+    display: inline-block;
+    padding-left: 5px;
+    color: #09c;
+}
+
+/*岗位来源标签*/
+.position-source:hover, .position-source {
+    background-color: #999;
+    color: #fff;
+    border-radius: 2px;
+    padding: 0 3px;
+}
+
+.position-iscroll-list li:hover .position-source {
+    background-color: #fff;
+    color: #09c;
+}
+
+/*学员列表更多筛选项*/
+.screen-more-float {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: none;
+}
+
+.screen-more-content {
+    position: absolute;
+    left: 50%;
+    border: 1px solid #e8e8e8;
+    padding: 10px;
+    width: 1200px;
+    margin-left: -600px;
+    height: auto;
+    background-color: #fff;
+    box-shadow: 0 0 5px #ddd;
+}
+
+.screen-more-content .fa-caret-up {
+    position: absolute;
+    top: -17px;
+    left: 50%;
+    font-size: 2em;
+    color: #ccc;
+    z-index: -1;
+}
+
+.screen-more-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.label-area-toggle {
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    font-size: 18px;
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    -o-transform: rotate(90deg); /* Opera */
+    -moz-transform: rotate(90deg); /* Firefox */
+}
+
+/*仪表盘，过滤标签*/
+.dashboard-search {
+    float: left;
+}
+
+.dashboard-search span {
+    display: block;
+    height: 30px;
+    border: 1px solid #09c;
+    line-height: 28px;
+    margin-right: 10px;
+    padding: 0 10px;
+    color: #09c;
+    border-radius: 3px;
+    background-color: #ecfaff;
+}
+
+.dashboard-search span i {
+    padding-left: 5px;
+    color: #09c;
+}
+
+/*手机号快捷搜索*/
+.phone-number-search {
+    position: fixed;
+    right: 25px;
+    top: 71px;
+    width: auto;
+}
+
+.phone-number-search input {
+    display: block;
+    border: 1px solid #ddd;
+    border-right: 0;
+    height: 28px;
+    float: left;
+    text-indent: 5px;
+    width: 90px;
+    background-color: #f9f9f9;
+}
+
+.phone-number-search input::placeholder {
+    color: #bbb;
+}
+
+.phone-number-search button {
+    display: block;
+    height: 28px;
+    background-color: #09c;
+    color: #fff;
+    width: 28px;
+    border: none;
+    padding: 0;
+}
+
+.phone-number-search button i {
+    color: #fff;
+}
+
+/*工作台列表专用样式*/
+.desktop-inner-list {
+    margin-right: -15px;
+}
+
+.desktop-inner-list li > div h4 a.hover-underline {
+    width: 75px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    float: left;
+}
+
+.desktop-inner-list li:hover > div h4 a.hover-underline {
+    border: none;
+}
+
+.desktop-inner-list li:hover > div h4 a span {
+    border-bottom: 1px solid #333;
+}
+
+.desktop-inner-list li.active:hover > div h4 a span {
+    border-bottom: 1px solid #09c;
+}
+
+.desktop-inner-list li > div h4 > span {
+    padding: 0;
+    display: inline-block;
+    width: 80px;
+}
+
+.desktop-inner-list li > div h4 > span div {
+    display: inline-block;
+    width: 30px;
+}
+
+.desktop-inner-list li > div h4 > span div i.fa-eye {
+    padding: 0;
+}
+
+.desktop-inner-list li > div h4 > span > a {
+    padding-left: 10px;
+}
+
+.desktop-inner-list li > div h4 > span > a > i {
+    padding: 0;
+}
+
+.desktop-inner-list li > div h4 > div {
+    display: inline-block;
+    font-size: 12px;
+}
+
+.desktop-inner-list li > div h4 > div i {
+    font-size: 14px;
+    color: #aaa;
+    padding-right: 5px;
+    margin-left: 15px;
+}
+
+/*学员-编辑*/
+.student-detail-edit {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    display: none;
+    padding: 0 !important;
+}
+
+.student-detail-edit button {
+    padding: 0;
+}
+
+.student-detail-edit i {
+    font-size: 18px;
+    color: #09c;
+}
+
+.student-detail-edit i.plus {
+    color: #00c309;
+}
+
+.desktop-left > div:hover .student-detail-edit {
+    display: block;
+}
+
+.desktop-left ul {
+    position: relative;
+}
+
+.desktop-left li.student-detail-edit-block {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    float: inherit;
+    width: auto;
+    display: none;
+}
+
+.student-detail-edit-block button {
+    padding: 0;
+}
+
+.student-detail-edit-block button i {
+    font-size: 18px;
+}
+
+ul:hover li.student-detail-edit-block {
+    display: block;
+}
+
+/*学员-多块-编辑*/
+.student-ul-edit {
+    border: 1px solid #fff;
+}
+
+.desktop-left > div:hover .student-ul-edit {
+    border: 1px solid #f7f7f7;
+}
+
+.desktop-left > div:hover .student-ul-edit:hover {
+    border: 1px solid #ddd;
+}
+
+/* 推荐岗位短信 */
+.recommend-position-sms {
+    padding-left: 10px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+.recommend-position-sms i {
+    padding-top: 3px;
+    font-size: 24px;
+    float: left;
+}
+
+.recommend-position-sms i.fa-toggle-off {
+    color: #ccc;
+}
+
+.recommend-position-sms i.fa-toggle-on {
+    color: #09c;
+}
+
+/*我的学员右侧信息*/
+.my-student-right-info {
+    position: absolute;
+    right: 5px;
+    top: 15px;
+}
+
+.my-student-right-info i {
+    font-size: 18px;
+    color: #bbb;
+    padding-right: 10px;
+}
+
+/*CR专员日程*/
+.make-appointment {
+    padding: 10px;
+}
+
+.make-appointment > ul {
+    border-left: 1px solid #e8e8e8;
+}
+
+.make-appointment > ul > li {
+    width: 20%;
+    float: left;
+    border: 1px solid #e8e8e8;
+    border-left: 0;
+}
+
+.make-appointment h4 {
+    font-size: 14px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.make-appointment h4 span {
+    font-size: 12px;
+    color: #aaa;
+    padding-left: 5px;
+}
+
+.make-appointment ul ul {
+    padding: 5px;
+}
+
+.make-appointment li li {
+    border-left: 2px solid #fff;
+    padding: 10px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.make-appointment li li:hover {
+    background-color: #f5f5f5;
+    border-left: 2px solid #09c;
+}
+
+.make-appointment li li a {
+    color: #2e6da4;
+}
+
+.make-appointment li li i {
+    color: #bbb;
+    float: right;
+}
+
+.make-appointment li li p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+}
+
+.make-appointment > ul > li.active {
+    background-color: #fafafa;
+}
+
+.make-appointment h4 em {
+    background-color: red;
+    color: #fff;
+    padding: 0 3px;
+    display: inline-block;
+    line-height: 15px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.student-popup-detail-right {
+    margin: 10px 10px 0 10px;
+    padding: 10px 0;
+    border-left: 2px solid #fff;
+}
+
+.student-popup-detail-right li {
+    line-height: 30px;
+    width: 50%;
+    overflow: hidden;
+    float: left;
+}
+
+.student-popup-detail-right li label.col-lg-2,
+.student-popup-detail-right li label.col-lg-4 {
+    text-align: right;
+    color: #aaa;
+}
+
+.student-popup-detail-right li span.col-lg-10,
+.student-popup-detail-right li span.col-lg-8 {
+    color: #444;
+}
+
+.student-popup-detail-right:hover {
+    border-left-color: #09c;
+    background: #f7f7f7;
+}
+
+/*执行日志列表*/
+.execution-log-list {
+    position: relative;
+    overflow: hidden;
+    padding-right: 10px;
+}
+
+.execution-log-list li {
+    overflow: hidden;
+    padding: 10px 20px 10px 5px;
+    border-bottom: 1px dotted #ccc;
+    position: relative;
+    border-left: 2px solid #fff;
+}
+
+.execution-log-list li > label {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    float: left;
+}
+
+.execution-log-list li > label.content-video {
+    background: url("../../images/crm/execution-log-video.png") center #ff983c no-repeat;
+    cursor: pointer;
+}
+
+.execution-log-list li > label.content-img {
+    background: url("../../images/crm/execution-log-img.png") center #75db83 no-repeat;
+    cursor: pointer;
+}
+
+.execution-log-list li > label.content-text {
+    background: url("../../images/crm/execution-log-text.png") center #71c4e0 no-repeat;
+    cursor: pointer;
+}
+
+.execution-log-list li > span {
+    overflow: hidden;
+    padding-left: 10px;
+    display: block;
+}
+
+.execution-log-list li > h5 {
+    font-size: 16px;
+    color: #333;
+    line-height: 35px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.execution-log-list li > h5 a {
+    color: #666;
+}
+
+.execution-log-list li > h5 a:focus {
+    color: #00b7ee;
+}
+
+.execution-log-list li > h5 em {
+    background: #aaa;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 12px;
+    padding: 0 5px;
+    display: inline-block;
+    line-height: 18px;
+}
+
+.execution-log-list li > span p {
+    color: #bbb;
+    line-height: 19px;
+    height: 38px;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.execution-log-list li > div {
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+}
+
+.execution-log-list li > div a i {
+    font-size: 16px;
+    color: #ddd;
+}
+
+.execution-log-list li > div span {
+    padding-right: 20px;
+    color: #999;
+}
+
+.execution-log-list li > div span i {
+    font-size: 14px;
+    padding-right: 5px;
+}
+
+.execution-log-list li:hover {
+    background: #f5f5f5;
+    border-left: 2px solid #09c;
+}
+
+.execution-log-list li:hover > div a i {
+    color: #09c;
+}
+
+/*CR留言*/
+.cr-message-list {
+    padding-top: 10px;
+    margin-right: -10px;
+}
+
+.cr-message-list ul {
+    padding-right: 10px;
+    padding-bottom: 30px;
+}
+
+.cr-message-list li {
+    margin-top: 15px;
+}
+
+.cr-message-list label {
+    width: 38px;
+    height: 38px;
+    border-radius: 19px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    line-height: 38px;
+    margin-top: 5px;
+}
+
+.cr-message-list li > div {
+    overflow: hidden;
+    padding: 0 10px;
+}
+
+.cr-message-list li > div p {
+    border-radius: 3px;
+    padding: 10px;
+    max-width: 90%;
+    margin: 5px 0;
+    float: left;
+}
+
+.cr-message-list li > div p img {
+    max-width: 240px;
+    max-height: 240px;
+}
+
+.cr-message-list li > div em {
+    width: 100%;
+    float: left;
+    color: #aaa;
+}
+
+.cr-message-list li > div i {
+    width: 100%;
+    float: left;
+    color: #ccc;
+}
+
+.cr-message-list li.receive-message label {
+    background: #09c;
+    border: 1px solid #09c;
+    color: #fff;
+    float: left;
+}
+
+.cr-message-list li.send-message label {
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    color: #666;
+    float: right;
+}
+
+.cr-message-list li.receive-message > div p {
+    background: #f5f5f5;
+    color: #666;
+    border: 1px solid #e8e8e8;
+}
+
+.cr-message-list li.send-message > div p {
+    background: #09c;
+    color: #fff;
+    float: right;
+}
+
+.cr-message-list li.send-message > div em {
+    text-align: right;
+}
+
+.cr-message-list li.send-message > div i {
+    text-align: right;
+}
+
+/*发布编辑日志*/
+.execution-log-edit ul li {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.execution-log-edit ul li > label {
+    text-align: right;
+    float: left;
+    width: 50px;
+    display: block;
+    line-height: 30px;
+}
+
+.execution-log-edit ul li > div {
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.execution-log-edit h5 {
+    padding: 10px;
+    color: #09c;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px dotted #ccc;
+    margin: 10px 0;
+}
+
+.execution-log-edit h5 i {
+    font-size: 18px;
+}
+
+.desktop-list li > div p i.companie-introduce {
+    font-size: 16px;
+}
+
+.log-text-editor .edui-default .edui-editor-iframeholder {
+    /*height: 400px!important;*/
+}
+
+.execution-log-editor {
+    margin: 0;
+    padding-right: 9px;
+}
+
+.execution-log-editor-hover {
+    border-left: 2px solid #fff;
+}
+
+.execution-log-editor-hover:hover {
+    background: #f5f5f5;
+    border-left: 2px solid #09c;
+}
+
+/*操作台-岗位列表-岗位介绍弹层*/
+.recruit-details-head {
+    background-color: #F4FAFF;
+    overflow: hidden;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.recruit-details-head label {
+    width: 80px;
+    height: 80px;
+    float: left;
+    border: 1px solid #ddd;
+}
+
+.recruit-details-head label img {
+    width: 100%;
+}
+
+.recruit-details-head > div {
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.recruit-details-head > div h4 {
+    padding: 5px 0 10px;
+}
+
+.recruit-details-head > div h4 span {
+    font-size: 12px;
+    color: #2e6da4;
+    padding-left: 10px;
+}
+
+.recruit-details-head > div p {
+    line-height: 20px;
+}
+
+.recruit-details-tabs li a {
+    border-radius: 0;
+    color: #666;
+    font-size: 12px;
+    padding: 0 15px 2px;
+    line-height: 30px;
+    border-top: 2px solid #fff;
+}
+
+.recruit-details-tabs li a:hover {
+    background-color: #f4f4f4;
+    border-color: #fff;
+    border-bottom-color: #ddd;
+}
+
+.recruit-details-tabs li.active a:focus,
+.recruit-details-tabs li.active a:hover,
+.recruit-details-tabs li.active a {
+    border-top: 2px solid #09c;
+}
+
+.recruit-details-content {
+    padding: 10px;
+    line-height: 24px;
+}
+
+.recruit-details-content li:hover {
+    background-color: #f6f6f6;
+}
+
+.send-message-head {
+    background-color: #eee;
+    padding: 5px 10px;
+}
+
+.send-message-head .pull-left {
+    overflow: hidden;
+    float: none !important;
+}
+
+.send-message-head .pull-left h5 {
+    display: inline-block;
+    padding-right: 10px;
+    color: #000;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 60%;
+}
+
+.send-message-head .pull-left span {
+    background: #aaa;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.send-message-head .pull-right span {
+    padding-right: 10px;
+    display: inline-block;
+    color: #aaa;
+}
+
+.send-message-head .pull-right button {
+    padding: 0 5px;
+}
+
+.send-message-head .pull-right button i {
+    margin: 0;
+    font-size: 16px;
+    color: #09c;
+}
+
+.send-message-content {
+    border: 1px solid #eee;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.position-inner-info .desktop-left li {
+    width: 100%;
+}
+
+/*未读信息提醒*/
+.execution-log-list .unread-icon-red {
+    margin-left: 5px;
+    margin-bottom: 3px;
+}
+
+.desktop-innner-list-upper-right-corner .unread-icon-red {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: -3px;
+}
+
+.cr-message-list .unread-icon-red {
+    float: none !important;
+    margin: 0 5px 2px;
+}
+
+.cr-message-list .message-name {
+    width: auto !important;
+}
+
+.receive-message .message-name {
+    float: left;
+}
+
+.send-message .message-name {
+    float: right;
+}
+
+.unread-icon-red {
+    background-color: red;
+    width: 9px !important;
+    height: 9px;
+    border-radius: 4.5px;
+    display: none;
+}
+
+.unread .unread-icon-red {
+    display: inline-block;
+}
+
+/*执行日志，超链接a标签*/
+.execution-log-list a:focus {
+    color: inherit !important;
+}
+
+/*多tab标签，下拉效果*/
+.desktop-tab-select {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 33px;
+}
+
+.tab-name-span {
+    overflow: hidden;
+    width: 48px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.desktop-tab-select button {
+    padding: 4px 8px;
+}
+
+.desktop-tab-select button i:hover {
+    color: #fff;
+}
+
+.desktop-tab-select ul li {
+    position: relative;
+}
+
+.desktop-tab-select ul li em {
+    position: absolute;
+    top: 11px;
+    right: 8px;
+    color: #ddd;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.desktop-tab-select ul li a:hover {
+    background-color: #eee;
+    color: #555;
+}
+
+.desktop-tab-select ul li:hover em {
+    color: #999;
+}
+
+.desktop-tab-select ul li a {
+    padding-left: 10px !important;
+}
+
+/*地铁站点选择-搜索*/
+.subway-site-search {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.subway-site-search input {
+    width: 120px;
+    height: 28px;
+    border: 1px solid #ddd;
+    border-right: none;
+    padding: 0 0 0 5px;
+    color: #666;
+}
+
+.subway-site-search input::-webkit-input-placeholder {
+    color: #bbb;
+}
+
+.subway-site-search button {
+    height: 28px;
+    width: 28px;
+    border: none;
+    background-color: #09c;
+    color: #fff;
+    padding: 0;
+}
+
+.subway-site-search button:hover {
+    background-color: #286090;
+}
+
+.subway-site-search button i {
+    color: #fff;
+}
+
+/*iScroll滚动条层级高度*/
+.iScrollVerticalScrollbar {
+    z-index: 20 !important;
+}
+
+/*pm执行日志-置顶*/
+.log-placed-top {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+
+.log-placed-top i.fa-thumb-tack {
+    transform: rotate(90deg);
+    font-size: 16px;
+    color: #ddd;
+}
+
+.log-placed-top i.fa-thumb-tack.active {
+    transform: rotate(45deg);
+    color: #09c;
+}
+
+.execution-log-list li:hover .log-placed-top i.fa-thumb-tack {
+    color: #09c;
+}
+
+/* 岗位自动匹配 */
+.auto-match-position {
+    padding-left: 10px;
+    overflow: hidden;
+    line-height: 30px;
+}
+
+.auto-match-position i {
+    padding-top: 3px;
+    font-size: 28px;
+    float: left;
+}
+
+.auto-match-position i.fa-toggle-off {
+    color: #ccc;
+}
+
+.auto-match-position i.fa-toggle-on {
+    color: #09c;
+}
+
+/*去除表格 行间隔线*/
+.app-table-list > tbody > tr > td {
+    border-right: 0;
+    height: 40px;
+}
+
+.app-table-list > tbody > tr > th {
+    border-right: 0;
+}
+
+.app-table-list > tbody > tr {
+    border-right: 1px solid #ddd;
+}

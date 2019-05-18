@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+    <!-- 配置JMS 连接工厂 -->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="${activemq.brokerURL}"/>
+        <property name="userName" value="${activemq.username}"/>
+        <property name="password" value="${activemq.password}"/>
+        <!-- 开启所有的信任 -->
+        <property name="trustAllPackages" value="true"/>
+        <!-- 异步发送 -->
+        <property name="useAsyncSend" value="true"/>
+        <!-- 这里定义重试策略,注意：只有持久化的才会重试-->
+        <property name="redeliveryPolicyMap" ref="redeliveryPolicyMap"/>
+        <!-- 消息传输监听器 -->
+        <property name="transportListener" ref="activeMQTransportListener"/>
+        <property name="producerWindowSize" value="102400"/>
+    </bean>
+
+    <!--这里设置各个消息队列的重发机制-->
+    <bean id="redeliveryPolicyMap" class="org.apache.activemq.broker.region.policy.RedeliveryPolicyMap">
+        <property name="redeliveryPolicyEntries">
+            <list>
+                <ref bean="logRedeliveryPolicy"/>
+                <ref bean="mailRedeliveryPolicy"/>
+                <ref bean="smsRedeliveryPolicy"/>
+                <ref bean="sessionRedeliveryPolicy"/>
+                <ref bean="topicSyncRedeliveryPolicy"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="logRedeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <!--重发次数 延时、延时系数、延时指数开关、目标（重发等待时间1s, 2s, 4s, 8s）-->
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="1000"/>
+        <property name="backOffMultiplier" value="2"/>
+        <!--启用指数倍数递增的方式增加延迟时间-->
+        <property name="useExponentialBackOff" value="true"/>
+        <property name="destination" ref="logQueue"/>
+    </bean>
+    <bean id="mailRedeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <!--重发次数 延时、延时系数、延时指数开关-->
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="5000"/>
+        <property name="destination" ref="mailQueue"/>
+    </bean>
+    <bean id="smsRedeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <!--重发次数 延时、延时系数、延时指数开关-->
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="5000"/>
+        <property name="destination" ref="smsQueue"/>
+    </bean>
+    <bean id="sessionRedeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <!--重发次数 延时、延时系数、延时指数开关-->
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="1000"/>
+        <property name="destination" ref="sessionQueue"/>
+    </bean>
+    <bean id="topicSyncRedeliveryPolicy" class="org.apache.activemq.RedeliveryPolicy">
+        <!--重发次数 延时、延时系数、延时指数开关-->
+        <property name="maximumRedeliveries" value="3"/>
+        <property name="redeliveryDelay" value="1000"/>
+        <property name="destination" ref="syncTopic"/>
+    </bean>
+
+    <!-- 配置ConnectionFactory -->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <!-- 目标ConnectionFactory对应真实的可以产生JMS Connection的ConnectionFactory -->
+        <property name="targetConnectionFactory" ref="targetConnectionFactory"/>
+        <!-- Session缓存数量 -->
+        <property name="sessionCacheSize" value="100"/>
+        <!--指定JMS客户ID-->
+        <property name="clientId" value="${activemq.jms.receiverClientId}"/>
+    </bean>
+
+    <!-- 队列目的地-->
+    <bean id="logQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.systemCode}.JOBS.LOG"/>
+    </bean>
+    <bean id="mailQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.systemCode}.JOBS.MAIL"/>
+    </bean>
+    <bean id="smsQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.systemCode}.JOBS.SMS"/>
+    </bean>
+    <bean id="sessionQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${activemq.systemCode}.JOBS.SESSION"/>
+    </bean>
+    <bean id="syncTopic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="JOBS.SYNC"/>
+    </bean>
+
+    <!-- 配置JMS模板（Queue），Spring提供的JMS工具类，它发送、接收消息。 -->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="receiveTimeout" value="10000"/>
+        <!-- true是topic，false是queue，默认是false-->
+        <property name="pubSubDomain" value="false"/>
+        <!-- 使 deliveryMode, priority, timeToLive设置生效-->
+        <property name="explicitQosEnabled" value="true"/>
+        <!-- 持久化 如果设置为非持久化MQ服务器重启后MQ中的数据会丢失-->
+        <property name="deliveryPersistent" value="true"/>
+        <!--这里注意:如果不开启事务，消息在异常的情况下是不会重试的-->
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="receiveTimeout" value="10000"/>
+        <!-- true是topic，false是queue，默认是false-->
+        <property name="pubSubDomain" value="true"/>
+        <!-- 使 deliveryMode, priority, timeToLive设置生效-->
+        <property name="explicitQosEnabled" value="true"/>
+        <!-- 持久化 如果设置为非持久化MQ服务器重启后MQ中的数据会丢失-->
+        <property name="deliveryPersistent" value="true"/>
+        <!--这里注意:如果不开启事务，消息在异常的情况下是不会重试的-->
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+
+    <!-- 消息接收监听器用于异步接收消息-->
+    <bean id="logContainer" class="com.bpms.activemq.listener.MessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="logQueue"/>
+        <property name="messageListener" ref="queueLogListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrency" value="2-10"/>
+    </bean>
+
+    <bean id="mailContainer" class="com.bpms.activemq.listener.MessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="mailQueue"/>
+        <property name="messageListener" ref="queueMailListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrency" value="1-50"/>
+    </bean>
+
+    <bean id="smsContainer" class="com.bpms.activemq.listener.MessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="smsQueue"/>
+        <property name="messageListener" ref="queueSmsListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrency" value="1-3"/>
+    </bean>
+
+    <bean id="sessionContainer" class="com.bpms.activemq.listener.MessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="sessionQueue"/>
+        <property name="messageListener" ref="queueSessionListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="concurrency" value="2-10"/>
+    </bean>
+
+    <bean id="syncContainer" class="com.bpms.activemq.listener.MessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="syncTopic"/>
+        <property name="messageListener" ref="topicSyncDataListener"/>
+        <property name="sessionTransacted" value="true"/>
+        <!--配置topic的监听线程concurrency为1-->
+        <property name="concurrency" value="1"/>
+        <!--设置是否使订阅持久，在pub-sub模式下-->
+        <property name="subscriptionDurable" value="true"/>
+        <!--持久订阅者的标志ID-->
+        <property name="clientId" value="${activemq.jms.receiverClientId}"/>
+        <!--持久订阅者的名称-->
+        <property name="durableSubscriptionName" value="${activemq.jms.receiverClientName}"/>
+    </bean>
+
+    <context:component-scan base-package="com.bpms.activemq.producer,com.bpms.activemq.consumer,com.bpms.activemq.listener"/>
+</beans>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.weekly_report_uid
+            ,main.week_cd
+            ,main.completed_work
+            ,main.unfinished_work
+            ,main.happy_thing
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_022.sub_name week_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_weekly_report_detail main
+            LEFT JOIN sys_dictionary DEMO_022 ON DEMO_022.record_status = 1 AND DEMO_022.main_cd = 'DEMO_022' AND DEMO_022.sub_cd = main.week_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

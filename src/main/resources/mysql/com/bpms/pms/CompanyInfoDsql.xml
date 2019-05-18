@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.company_info_cd
+            ,main.title
+            ,main.content
+            ,main.effect_start_date
+            ,main.effect_end_date
+            ,main.charge_user_uid
+            ,main.charge_dept_uid
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,PMS001.sub_name company_info_name
+            ,charge_dept.dept_name charge_dept_name
+            ,charge_user.user_name charge_user_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            pms_company_info main
+            LEFT JOIN sys_dictionary PMS001 ON PMS001.record_status = 1 AND PMS001.main_cd = 'PMS001' AND PMS001.sub_cd = main.company_info_cd
+            LEFT JOIN sys_dept charge_dept ON charge_dept.uid = main.charge_dept_uid
+            LEFT JOIN sys_user charge_user ON charge_user.uid = main.charge_user_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

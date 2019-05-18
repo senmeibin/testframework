@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            *
+        FROM
+            sys_position main
+        WHERE
+            (record_status = 1 OR record_status = 8)
+        ]]>
+    </search>
+</sql>

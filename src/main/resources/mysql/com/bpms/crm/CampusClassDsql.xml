@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.campus_uid
+            ,main.category_cd
+            ,main.class_level_cd
+            ,main.class_year_month
+            ,main.class_start_date
+            ,main.class_end_date
+            ,main.class_seq
+            ,main.class_time
+            ,main.class_number
+            ,main.class_name
+            ,main.classroom
+            ,main.teacher_user_uid
+            ,main.consultant_user_uid
+            ,main.student_limit
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,CRM005.sub_name class_level_name
+            ,CRM020.sub_name category_name
+            ,teacher_user.user_name teacher_user_name
+            ,consultant_user.user_name consultant_user_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,campus.name campus_name
+            ,class_student.student_uids
+            ,class_student.student_names
+            ,class_student.student_count
+        FROM
+            crm_campus_class main
+            LEFT JOIN
+                (
+                    -- 班级学员
+                    SELECT
+                        GROUP_CONCAT(class_student.student_uid) student_uids
+                        ,GROUP_CONCAT(student.name) student_names
+                        ,COUNT(student.name) student_count
+                        ,class_student.campus_class_uid
+                    FROM
+                        crm_class_student class_student,
+                        crm_student student
+                    WHERE
+                        class_student.student_uid = student.uid
+                    GROUP BY
+                        class_student.campus_class_uid
+                ) AS class_student ON class_student.campus_class_uid = main.uid
+            LEFT JOIN sys_dictionary CRM005 ON CRM005.record_status = 1 AND CRM005.main_cd = 'CRM005' AND CRM005.sub_cd = main.class_level_cd
+            LEFT JOIN sys_dictionary CRM020 ON CRM020.record_status = 1 AND CRM020.main_cd = 'CRM020' AND CRM020.sub_cd = main.category_cd
+            LEFT JOIN crm_campus campus ON campus.uid = main.campus_uid
+            LEFT JOIN sys_user teacher_user ON teacher_user.uid = main.teacher_user_uid
+            LEFT JOIN sys_user consultant_user ON consultant_user.uid = main.consultant_user_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

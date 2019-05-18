@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.city_cd
+            ,main.city_name
+            ,main.disp_seq
+            ,main.area_uid
+            ,main.parent_city_uid
+            ,main.remark
+            ,main.dept_uid
+            ,dept.dept_name
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,parent.city_name parent_city_name
+            ,cmn_area.area_name
+        FROM 
+            cmn_city main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN cmn_city parent ON parent.uid = main.parent_city_uid
+            LEFT JOIN cmn_area ON cmn_area.uid = main.area_uid
+            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid AND dept.dept_class = 2
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+
+    <!-- 获取执行城市下拉列表 -->
+    <getCityList>
+        <![CDATA[
+        SELECT
+            main.uid sub_cd,
+            main.city_name sub_name
+        FROM
+            cmn_city main
+            INNER JOIN sys_dept dept ON dept.uid = main.dept_uid AND dept.dept_class = 2
+        WHERE
+            main.record_status = 1
+            AND dept.record_status = 1
+        ]]>
+    </getCityList>
+</sql>

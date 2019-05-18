@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            RAND() uid
+            ,table_name
+            ,table_comment
+            ,table_rows record_count
+            ,0 logic_delete_record_count
+        FROM
+            information_schema.tables main
+        WHERE
+            table_schema = (SELECT DATABASE())
+        ]]>
+    </search>
+</sql>

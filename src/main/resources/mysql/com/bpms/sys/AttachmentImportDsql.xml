@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.app_code
+            ,main.module_name
+            ,main.file_name
+            ,main.file_path
+            ,main.file_size
+            ,main.mime_type
+            ,main.batch_no
+            ,main.import_attribute_name01
+            ,main.import_attribute_name02
+            ,main.import_attribute_name03
+            ,main.import_attribute_name04
+            ,main.import_attribute_name05
+            ,main.import_attribute_name06
+            ,main.import_attribute_name07
+            ,main.import_attribute_name08
+            ,main.import_attribute_name09
+            ,main.import_attribute_name10
+            ,main.import_attribute_value01
+            ,main.import_attribute_value02
+            ,main.import_attribute_value03
+            ,main.import_attribute_value04
+            ,main.import_attribute_value05
+            ,main.import_attribute_value06
+            ,main.import_attribute_value07
+            ,main.import_attribute_value08
+            ,main.import_attribute_value09
+            ,main.import_attribute_value10
+            ,main.import_result
+            ,main.import_result_detail_message
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,app.app_name
+        FROM 
+            sys_attachment_import main
+            LEFT JOIN sys_application app ON app.app_code = main.app_code
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+
+    <!-- 如导入详细结果超过1k 时， 不加载 -->
+    <searchWithShortDetailMessage>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.app_code
+            ,main.module_name
+            ,main.file_name
+            ,main.file_path
+            ,main.file_size
+            ,main.mime_type
+            ,main.batch_no
+            ,main.import_attribute_name01
+            ,main.import_attribute_name02
+            ,main.import_attribute_name03
+            ,main.import_attribute_name04
+            ,main.import_attribute_name05
+            ,main.import_attribute_name06
+            ,main.import_attribute_name07
+            ,main.import_attribute_name08
+            ,main.import_attribute_name09
+            ,main.import_attribute_name10
+            ,main.import_attribute_value01
+            ,main.import_attribute_value02
+            ,main.import_attribute_value03
+            ,main.import_attribute_value04
+            ,main.import_attribute_value05
+            ,main.import_attribute_value06
+            ,main.import_attribute_value07
+            ,main.import_attribute_value08
+            ,main.import_attribute_value09
+            ,main.import_attribute_value10
+            ,main.import_result
+            ,IF(LENGTH(main.import_result_detail_message) > 1024, '导入详细内容超过1K，不支持在线查看，如需查看请联络系统管理员！', main.import_result_detail_message) import_result_detail_message
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,app.app_name
+        FROM
+            sys_attachment_import main
+            LEFT JOIN sys_application app ON app.app_code = main.app_code
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </searchWithShortDetailMessage>
+</sql>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.charges_information_uid
+            ,main.due_charges_date
+            ,main.charges_date
+            ,main.chargers_name
+            ,main.charges_type_cd
+            ,main.charges_cd
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_014.sub_name charges_type_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_charges_information_detail main
+            LEFT JOIN sys_dictionary DEMO_014 ON DEMO_014.record_status = 1 AND DEMO_014.main_cd = 'DEMO_014' AND DEMO_014.sub_cd = main.charges_type_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

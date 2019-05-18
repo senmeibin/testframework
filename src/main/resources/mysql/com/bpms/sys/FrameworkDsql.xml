@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <!--根据指定的表名称获取表元数据信息-->
+    <getDatabaseMetaData>
+        <![CDATA[
+        SELECT
+            *
+        FROM
+            INFORMATION_SCHEMA.columns
+        WHERE
+            table_name = '%s'
+            AND table_schema = (SELECT DATABASE())
+        ]]>
+    </getDatabaseMetaData>
+
+    <!--判断指定表中是否存在指定的字段-->
+    <fieldExistsInTable>
+        <![CDATA[
+        SELECT
+            column_name
+        FROM
+            INFORMATION_SCHEMA.columns
+        WHERE
+            table_name = '%s'
+            AND column_name = '%s'
+            AND table_schema = (SELECT DATABASE())
+        ]]>
+    </fieldExistsInTable>
+
+    <!--获取当前数据库下所有的表名-->
+    <getAllTableNames>
+        <![CDATA[
+        SHOW TABLES
+        ]]>
+    </getAllTableNames>
+
+    <!--取得指定表、指定字段数据列表【下拉框内容填充专用】-->
+    <getDropdownList>
+        <![CDATA[
+        SELECT
+            CAST(%s AS CHAR(512)) sub_cd,
+            %s sub_name
+        FROM
+            %s main
+        ]]>
+    </getDropdownList>
+
+</sql>

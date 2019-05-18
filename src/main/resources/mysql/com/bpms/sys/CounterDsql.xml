@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.type_cd
+            ,main.group_counter1
+            ,main.group_counter2
+            ,main.group_counter3
+            ,main.group_counter4
+            ,main.group_counter5
+            ,main.counter_number
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,SYS999.sub_name type_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            sys_counter main
+            -- 计数器类型
+            LEFT JOIN sys_dictionary SYS999 ON SYS999.record_status = 1 AND SYS999.main_cd = 'SYS999' AND SYS999.sub_cd = main.type_cd 
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

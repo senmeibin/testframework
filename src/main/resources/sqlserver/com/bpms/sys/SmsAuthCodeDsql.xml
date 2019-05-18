@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.mobile
+            ,main.auth_code
+            ,main.auth_code_type
+            ,main.valid_time
+            ,main.validated
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,SYS016.sub_name auth_code_type_name
+            ,SYS017.sub_name validated_name
+        FROM 
+            sys_sms_auth_code main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN sys_dictionary SYS016 ON SYS016.record_status = 1 AND SYS016.main_cd = 'SYS016' AND SYS016.sub_cd = main.auth_code_type
+            LEFT JOIN sys_dictionary SYS017 ON SYS017.record_status = 1 AND SYS017.main_cd = 'SYS017' AND SYS017.sub_cd = main.validated
+        WHERE 
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+
+    <!-- 验证 验证码信息 -->
+    <checkAuthCode>
+        SELECT
+        main.*
+        FROM
+        sys_sms_auth_code main
+        WHERE
+        main.record_status = 1
+        AND main.valid_time > NOW()
+        ${dynamicCondition}
+        ORDER BY
+        main.valid_time DESC
+        LIMIT 1
+    </checkAuthCode>
+</sql>

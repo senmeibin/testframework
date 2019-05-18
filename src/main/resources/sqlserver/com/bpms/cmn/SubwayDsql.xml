@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.city_uid
+            ,main.subway_no
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,main.disp_seq
+            ,region_city.region_name city_name
+            ,region_province.region_name province_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            cmn_subway main
+            LEFT JOIN cmn_region region_city ON region_city.uid = main.city_uid  AND region_city.region_grade = 2
+            LEFT JOIN cmn_region region_province ON region_city.parent_uid = region_province.uid AND region_province.region_grade = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+
+    <!--所有地铁站点-->
+    <searchSubwayStation>
+        <![CDATA[
+        SELECT
+            city.region_name city_name
+            ,subway.subway_no
+            ,station.station_name
+        FROM cmn_subway_station station
+            INNER JOIN cmn_subway subway ON subway.uid = station.subway_uid AND station.record_status = 1
+            INNER JOIN cmn_region city ON city.uid = subway.city_uid AND city.record_status = 1
+        WHERE 1 = 1
+        ${dynamicCondition}
+        ORDER BY cast(city.uid AS SIGNED ),subway.disp_seq,station.disp_seq
+        ]]>
+    </searchSubwayStation>
+</sql>

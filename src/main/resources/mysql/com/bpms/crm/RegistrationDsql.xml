@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.student_uid
+            ,main.reservation_uid
+            ,main.registration_belong_campus_uid
+            ,main.registration_belong_consultant_user_uid
+            ,main.registration_date
+            ,main.registration_campus_uid
+            ,main.registration_campus_class_uid
+            ,main.is_new_student
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,registration_belong_consultant_user.user_name registration_belong_consultant_user_name
+            ,registration_belong_campus.name registration_belong_campus_name
+            ,registration_campus.name registration_campus_name
+            ,registration_campus_class.class_name registration_campus_class_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+
+            -- 学员信息相关字段
+            ,student.name student_name
+            ,student.gender_cd student_gender_cd
+            ,student.picture student_picture
+            ,student.card_type_cd student_card_type_cd
+            ,student.card_number student_card_number
+            ,student.student_age
+            ,student.birthday student_birthday
+            ,student.base_level_cd student_base_level_cd
+            ,student.student_belong_campus_uid
+            ,student.consult_method_cd student_consult_method_cd
+            ,student.source_type_cd student_source_type_cd
+            ,student.parent_name student_parent_name
+            ,student.relationship_type_cd student_relationship_type_cd
+            ,student.mobile student_mobile
+            ,student.email student_email
+            ,student.province_uid student_province_uid
+            ,student.city_uid student_city_uid
+            ,student.region_uid student_region_uid
+            ,student.home_address student_home_address
+            ,student.zip_code student_zip_code
+            ,student.before_school student_before_school
+            ,student.student_status_cd
+            ,student.first_consult_time student_first_consult_time
+            ,student.recent_consult_time student_recent_consult_time
+            ,student.remark student_remark
+            ,student.followup_count student_followup_count
+            ,student.reservation_count student_reservation_count
+            ,student.registration_count student_registration_count
+            ,student.payment_count student_payment_count
+
+            ,CRM006.sub_name student_gender_name
+            ,CRM007.sub_name student_card_type_name
+            ,CRM008.sub_name student_base_level_name
+            ,CRM009.sub_name student_consult_method_name
+            ,CRM010.sub_name student_source_type_name
+            ,CRM011.sub_name student_relationship_type_name
+            ,CRM012.sub_name student_status_name
+            ,student_belong_consultant_user.user_name student_belong_consultant_user_name
+            ,province.region_name student_province_name
+            ,city.region_name student_city_name
+            ,region.region_name student_region_name
+            ,student_belong_campus.name student_belong_campus_name
+        FROM
+            crm_registration main
+            LEFT JOIN crm_campus registration_belong_campus ON registration_belong_campus.uid = main.registration_belong_campus_uid
+            LEFT JOIN crm_campus registration_campus ON registration_campus.uid = main.registration_campus_uid
+            LEFT JOIN crm_campus_class registration_campus_class ON registration_campus_class.uid = main.registration_campus_class_uid
+            LEFT JOIN sys_user registration_belong_consultant_user ON registration_belong_consultant_user.uid = main.registration_belong_consultant_user_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+
+            -- 学员信息相关表
+            LEFT JOIN crm_student student ON student.uid = main.student_uid
+            LEFT JOIN cmn_region province ON province.uid = student.province_uid
+            LEFT JOIN cmn_region city ON city.uid = student.city_uid
+            LEFT JOIN cmn_region region ON region.uid = student.region_uid
+            LEFT JOIN crm_campus student_belong_campus ON student_belong_campus.uid = student.student_belong_campus_uid
+            LEFT JOIN sys_dictionary CRM006 ON CRM006.record_status = 1 AND CRM006.main_cd = 'CRM006' AND CRM006.sub_cd = student.gender_cd
+            LEFT JOIN sys_dictionary CRM007 ON CRM007.record_status = 1 AND CRM007.main_cd = 'CRM007' AND CRM007.sub_cd = student.card_type_cd
+            LEFT JOIN sys_dictionary CRM008 ON CRM008.record_status = 1 AND CRM008.main_cd = 'CRM008' AND CRM008.sub_cd = student.base_level_cd
+            LEFT JOIN sys_dictionary CRM009 ON CRM009.record_status = 1 AND CRM009.main_cd = 'CRM009' AND CRM009.sub_cd = student.consult_method_cd
+            LEFT JOIN sys_dictionary CRM010 ON CRM010.record_status = 1 AND CRM010.main_cd = 'CRM010' AND CRM010.sub_cd = student.source_type_cd
+            LEFT JOIN sys_dictionary CRM011 ON CRM011.record_status = 1 AND CRM011.main_cd = 'CRM011' AND CRM011.sub_cd = student.relationship_type_cd
+            LEFT JOIN sys_dictionary CRM012 ON CRM012.record_status = 1 AND CRM012.main_cd = 'CRM012' AND CRM012.sub_cd = student.student_status_cd
+            LEFT JOIN sys_user student_belong_consultant_user ON student_belong_consultant_user.uid = student.student_belong_consultant_user_uid
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

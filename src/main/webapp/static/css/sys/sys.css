@@ -1,0 +1,13 @@
+.mainte-setting {
+    cursor: pointer;
+}
+
+.mainte-setting input {
+    margin: 7px 5px 0px 0px;
+    vertical-align: middle;
+}
+
+.mainte-setting label {
+    vertical-align: middle;
+    margin: 7px 5px 0px 0px;
+}

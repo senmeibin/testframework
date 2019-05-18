@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.docking_content
+            ,main.docking_date
+            ,main.quantity
+            ,main.docking_person_uid
+            ,docking_person.user_name docking_person_name
+            ,main.third_party_service_uid
+            ,third_party.company_name third_party_service_name
+            ,main.third_party_service_contacts_uid
+            ,third_party_contacts.contact_name third_party_service_contacts_name
+            ,main.following
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_resources_docking_record main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_user docking_person ON docking_person.uid = main.docking_person_uid
+            LEFT JOIN demo_third_party_service_contact third_party ON third_party.uid = main.third_party_service_uid AND third_party.record_status = 1
+            LEFT JOIN demo_third_party_service_contacts third_party_contacts ON third_party_contacts.uid = main.third_party_service_contacts_uid AND third_party_contacts.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

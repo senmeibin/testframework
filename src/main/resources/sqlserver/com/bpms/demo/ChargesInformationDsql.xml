@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,base.base_name
+            ,main.unit_cd
+            ,main.quantity
+            ,main.station_position
+            ,main.station_rent
+            ,main.rent_way_cd
+            ,main.deposit_method_cd
+            ,main.business_deposit
+            ,main.charges_type_cd
+            ,main.first_charge_date
+            ,main.each_charge_amount
+            ,main.next_receipt_date
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,DEMO_013.sub_name charges_type_name
+            ,DEMO_025.sub_name unit_name
+            ,DEMO_026.sub_name rent_way_name
+            ,DEMO_027.sub_name deposit_method_name
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_charges_information main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN demo_base_info base ON base.uid = company.base_uid AND base.record_status = 1
+            LEFT JOIN sys_dictionary DEMO_013 ON DEMO_013.record_status = 1 AND DEMO_013.main_cd = 'DEMO_013' AND DEMO_013.sub_cd = main.charges_type_cd
+            LEFT JOIN sys_dictionary DEMO_025 ON DEMO_025.record_status = 1 AND DEMO_025.main_cd = 'DEMO_025' AND DEMO_025.sub_cd = main.unit_cd
+            LEFT JOIN sys_dictionary DEMO_026 ON DEMO_026.record_status = 1 AND DEMO_026.main_cd = 'DEMO_026' AND DEMO_026.sub_cd = main.rent_way_cd
+            LEFT JOIN sys_dictionary DEMO_027 ON DEMO_027.record_status = 1 AND DEMO_027.main_cd = 'DEMO_027' AND DEMO_027.sub_cd = main.deposit_method_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

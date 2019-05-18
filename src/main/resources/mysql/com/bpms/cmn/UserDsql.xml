@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <!--取得所有用户-->
+    <getUserSelect>
+        <![CDATA[
+        SELECT
+            users.uid,
+            users.user_cd,
+            users.user_name,
+            users.user_mail,
+            users.user_phone,
+            users.user_number,
+            users.dept_uid,
+            users.record_status,
+            dept.dept_name,
+            dept.dept_full_name,
+            dept.parent_dept_uid
+        FROM
+            sys_user users,
+            sys_dept dept
+        WHERE
+            users.dept_uid = dept.uid
+            AND (users.record_status = 1 OR users.record_status = 8)
+            ${dynamicCondition}
+        ]]>
+    </getUserSelect>
+
+    <!--取得所有具有指定权限的用户-->
+    <getUserSelectByRole>
+        <![CDATA[
+        SELECT
+            DISTINCT users.uid,
+            users.user_cd,
+            users.user_name,
+            users.user_mail,
+            users.user_phone,
+            users.dept_uid,
+            users.user_number,
+            users.record_status,
+            dept.dept_name,
+            dept.dept_full_name,
+            dept.parent_dept_uid
+        FROM
+            sys_user users,
+            sys_dept dept,
+            sys_dept company,
+            sys_role role,
+            sys_user_role user_role
+        WHERE
+            users.dept_uid = dept.uid
+            AND dept.company_dept_uid = company.uid
+            AND (users.record_status = 1 OR users.record_status = 8)
+            AND users.reg_system = 0
+            AND role.uid = user_role.role_uid
+            AND user_role.user_uid = users.uid
+            ${dynamicCondition}
+        ]]>
+    </getUserSelectByRole>
+
+    <!--取得所有具有指定权限的用户-->
+    <getUsersByRoleAndPosition>
+        <![CDATA[
+        SELECT
+            users.uid,
+            users.user_cd,
+            users.user_name,
+            users.user_mail,
+            users.user_phone,
+            users.user_number,
+            users.dept_uid,
+            users.record_status,
+            dept.dept_name,
+            dept.dept_full_name,
+            dept.parent_dept_uid
+        FROM
+            sys_user users
+        LEFT JOIN sys_dept dept ON dept.uid = users.dept_uid
+        LEFT JOIN
+            (
+                SELECT
+                    GROUP_CONCAT(role.role_code) role_codes, user_role.user_uid
+                FROM
+                    sys_role role,
+                    sys_user_role user_role
+                WHERE
+                    role.uid = user_role.role_uid
+                    AND role.record_status = 1
+                    AND user_role.record_status =1
+                GROUP BY
+                    user_role.user_uid
+            ) user_roles ON user_roles.user_uid = users.uid
+        LEFT JOIN sys_position ON sys_position.uid = users.position_uid
+        WHERE
+            users.reg_system = 0
+            AND (users.record_status = 1 OR users.record_status = 8)
+            %s
+        ]]>
+    </getUsersByRoleAndPosition>
+</sql>

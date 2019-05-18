@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.main_customer_uid
+            ,main.customer_code
+            ,main.customer_name
+            ,main.customer_abbreviation
+            ,main.property_cd
+            ,main.scale_cd
+            ,main.address
+            ,main.zipcode
+            ,main.telephone
+            ,main.fax
+            ,main.email
+            ,main.url
+            ,main.contact_name
+            ,main.legal_person_name
+            ,main.registered_capital
+            ,main.invoice_title
+            ,main.invoice_registered_address
+            ,main.invoice_telephone
+            ,main.invoice_bank
+            ,main.invoice_account_no
+            ,main.invoice_tax_no
+            ,main.customer_source_cd
+            ,main.industry_cd
+            ,main.business_type_cd
+            ,main.customer_level_cd
+            ,main.customer_status_cd
+            ,main.business_scope
+            ,main.customer_introduction
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,cm033.sub_name property_name
+            ,cm034.sub_name scale_name
+            ,cm035.sub_name customer_source_name
+            ,cm001.sub_name industry_name
+            ,cm036.sub_name business_type_name
+            ,cm037.sub_name customer_level_name
+            ,cm038.sub_name customer_status_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,cmn_main_customer.main_customer_name
+        FROM
+            cmn_customer main
+            LEFT JOIN sys_dictionary cm033 ON cm033.record_status = 1 AND cm033.main_cd = 'CM033' AND cm033.sub_cd = main.property_cd
+            LEFT JOIN sys_dictionary cm034 ON cm034.record_status = 1 AND cm034.main_cd = 'CM034' AND cm034.sub_cd = main.scale_cd
+            LEFT JOIN sys_dictionary cm035 ON cm035.record_status = 1 AND cm035.main_cd = 'CM035' AND cm035.sub_cd = main.customer_source_cd
+            LEFT JOIN sys_dictionary cm001 ON cm001.record_status = 1 AND cm001.main_cd = 'CM001' AND cm001.sub_cd = main.industry_cd
+            LEFT JOIN sys_dictionary cm036 ON cm036.record_status = 1 AND cm036.main_cd = 'CM036' AND cm036.sub_cd = main.business_type_cd
+            LEFT JOIN sys_dictionary cm037 ON cm037.record_status = 1 AND cm037.main_cd = 'CM037' AND cm037.sub_cd = main.customer_level_cd
+            LEFT JOIN sys_dictionary cm038 ON cm038.record_status = 1 AND cm038.main_cd = 'CM038' AND cm038.sub_cd = main.customer_status_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN cmn_main_customer ON cmn_main_customer.uid = main.main_customer_uid
+        WHERE
+            main.record_status = 1
+            %s
+         ]]>
+    </search>
+
+    <!--获取用户所属客户-->
+    <findByUserUid>
+        <![CDATA[
+        SELECT
+            main.*
+        FROM
+            cmn_customer main,
+            cmn_customer_user customer_user
+        WHERE
+            customer_user.customer_uid = main.uid
+            AND customer_user.record_status = 1
+            AND customer_user.user_uid = :userUid
+        ]]>
+    </findByUserUid>
+
+    <!--查询用户未所属的客户列表-->
+    <searchNoCustomerUser>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.main_customer_uid
+            ,main.customer_code
+            ,main.customer_name
+            ,main.customer_abbreviation
+            ,main.property_cd
+            ,main.scale_cd
+            ,main.address
+            ,main.zipcode
+            ,main.telephone
+            ,main.fax
+            ,main.email
+            ,main.url
+            ,main.contact_name
+            ,main.legal_person_name
+            ,main.registered_capital
+            ,main.invoice_title
+            ,main.invoice_registered_address
+            ,main.invoice_telephone
+            ,main.invoice_bank
+            ,main.invoice_account_no
+            ,main.invoice_tax_no
+            ,main.customer_source_cd
+            ,main.industry_cd
+            ,main.business_type_cd
+            ,main.customer_level_cd
+            ,main.customer_status_cd
+            ,main.business_scope
+            ,main.customer_introduction
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,cm033.sub_name property_name
+            ,cm034.sub_name scale_name
+            ,cm035.sub_name customer_source_name
+            ,cm001.sub_name industry_name
+            ,cm036.sub_name business_type_name
+            ,cm037.sub_name customer_level_name
+            ,cm038.sub_name customer_status_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+            ,cmn_main_customer.main_customer_name
+        FROM
+            cmn_customer main
+            LEFT JOIN sys_dictionary cm033 ON cm033.record_status = 1 AND cm033.main_cd = 'CM033' AND cm033.sub_cd = main.property_cd
+            LEFT JOIN sys_dictionary cm034 ON cm034.record_status = 1 AND cm034.main_cd = 'CM034' AND cm034.sub_cd = main.scale_cd
+            LEFT JOIN sys_dictionary cm035 ON cm035.record_status = 1 AND cm035.main_cd = 'CM035' AND cm035.sub_cd = main.customer_source_cd
+            LEFT JOIN sys_dictionary cm001 ON cm001.record_status = 1 AND cm001.main_cd = 'CM001' AND cm001.sub_cd = main.industry_cd
+            LEFT JOIN sys_dictionary cm036 ON cm036.record_status = 1 AND cm036.main_cd = 'CM036' AND cm036.sub_cd = main.business_type_cd
+            LEFT JOIN sys_dictionary cm037 ON cm037.record_status = 1 AND cm037.main_cd = 'CM037' AND cm037.sub_cd = main.customer_level_cd
+            LEFT JOIN sys_dictionary cm038 ON cm038.record_status = 1 AND cm038.main_cd = 'CM038' AND cm038.sub_cd = main.customer_status_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN cmn_main_customer ON cmn_main_customer.uid = main.main_customer_uid
+        WHERE
+            main.record_status = 1
+            AND NOT EXISTS (
+                SELECT
+                    uid
+                FROM
+                    cmn_customer_user customer_user
+                WHERE
+                    customer_user.user_uid = '@userUid'
+                    AND customer_user.customer_uid = main.uid
+                    AND customer_user.record_status = 1
+            )
+            ${dynamicCondition}
+        ]]>
+    </searchNoCustomerUser>
+</sql>

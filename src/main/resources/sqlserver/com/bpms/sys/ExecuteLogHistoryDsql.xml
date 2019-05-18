@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.execute_record_uid
+            ,main.function_code
+            ,main.function_name
+            ,main.function_type_cd
+            ,main.function_method
+            ,main.execute_start_date
+            ,main.execute_end_date
+            ,main.execute_machine
+            ,main.source_system_name
+            ,main.dest_system_name
+            ,main.execute_content
+            ,main.execute_result_sum
+            ,main.result
+            ,main.result_code
+            ,main.result_message
+            ,main.migration_date
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,SYS011.sub_name function_type_name
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            sys_execute_log_history main
+            LEFT JOIN sys_dictionary SYS011 ON SYS011.record_status = 1 AND SYS011.main_cd = 'SYS011' AND SYS011.sub_cd = main.function_type_cd
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

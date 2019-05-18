@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>Shiro安全配置</description>
+
+    <!-- Shiro's main business-tier object for controller-enabled applications -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="shiroDbRealm"/>
+        <property name="subjectFactory" ref="casSubjectFactory"/>
+    </bean>
+
+    <!-- 項目自定义的Realm, 所有accountService依赖的dao都需要用depends-on声明 -->
+    <bean id="shiroDbRealm" class="com.bpms.core.security.ShiroDbRealm">
+        <property name="authenticationCacheName" value="shiro-authorizationCache"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+        <!--该地址为cas server地址 -->
+        <property name="casServerUrlPrefix" value="${shiro.cas.serverUrl}"/>
+        <!-- 该地址为是当前应用 CAS 服务 URL，即用于接收并处理登录成功后的 Ticket 的， 必须和loginUrl中的service参数保持一致，否则服务器会判断service不匹配-->
+        <property name="casService" value="${shiro.cas.clientUrl}shiro-cas"/>
+    </bean>
+
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
+
+    <!-- Shiro Filter -->
+    <bean id="shiroFilter" class="com.bpms.core.security.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="${shiro.cas.serverUrl}login?service=${shiro.cas.clientUrl}shiro-cas"/>
+        <property name="successUrl" value="/portal/dashboard"/>
+        <property name="filters">
+            <map>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="logout" value-ref="logoutFilter"/>
+                <entry key="user" value-ref="userFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /favicon.ico = anon
+                <!--自定义拦截用于登录CAS-->
+                /shiro-cas = authc
+                /login = authc
+                /logout = logout
+                <!--Uploadify文件上传专用控制器(免认证，解决Firefox会话丢失的问题)-->
+                /cmn/fileupload/** = anon
+                /cmn/filepreview/** = anon
+                /auth/retrievepassword/** = anon
+                /error/** = anon
+                /static/** = anon
+                /dwr/** = anon
+                /*/api/** = anon
+                /** = user
+            </value>
+        </property>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean id="formAuthenticationFilter" class="com.bpms.core.security.CaptchaFormAuthenticationFilter">
+        <!-- 配置验证错误时的失败页面 -->
+        <property name="failureUrl" value="${shiro.cas.serverUrl}login?service=${shiro.cas.clientUrl}shiro-cas"/>
+    </bean>
+
+    <!-- 如果要实现cas的remember me的功能，需要用到下面这个bean，并设置到securityManager的subjectFactory中 -->
+    <bean id="casSubjectFactory" class="com.bpms.core.security.CasSubjectFactory"/>
+
+    <bean id="logoutFilter" class="com.bpms.core.security.LogoutFilter">
+        <property name="redirectUrl" value="${shiro.cas.serverUrl}logout?service=${shiro.cas.clientUrl}shiro-cas"/>
+    </bean>
+
+    <bean id="userFilter" class="com.bpms.core.security.UserFilter"/>
+</beans>

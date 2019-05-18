@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.*
+        FROM 
+            sys_enterprise_setting main
+        WHERE 
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

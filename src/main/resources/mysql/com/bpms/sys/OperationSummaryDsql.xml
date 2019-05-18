@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.url
+            ,main.count
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM
+            sys_operation_summary main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+
+    <!--更新指定URL的访问次数累加一-->
+    <executeAddCount>
+        <![CDATA[
+        UPDATE
+            sys_operation_summary
+        SET
+            count = count + 1,
+            update_user = :updateUser,
+            update_date = :updateDate
+        WHERE
+            url = :url
+        ]]>
+    </executeAddCount>
+
+    <!--取得页面浏览平均数量-->
+    <getAverageCount>
+        <![CDATA[
+        SELECT
+            AVG(count) average_count
+        FROM
+            sys_operation_summary main
+        WHERE
+            1 = 1
+            ${dynamicCondition}
+        ]]>
+    </getAverageCount>
+</sql>

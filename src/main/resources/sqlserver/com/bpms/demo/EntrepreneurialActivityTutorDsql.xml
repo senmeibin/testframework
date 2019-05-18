@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.entrepreneurial_activity_uid
+            ,main.tutor_uid
+            ,tutor.tutor_name
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_entrepreneurial_activity_tutor main
+            LEFT JOIN demo_entrepreneurial_activity entrepreneurial ON entrepreneurial.record_status = 1 AND entrepreneurial.uid = main.entrepreneurial_activity_uid
+            LEFT JOIN demo_tutor tutor ON tutor.record_status = 1 AND tutor.uid = main.tutor_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

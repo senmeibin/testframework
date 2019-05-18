@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,potential_customer.company_name
+            ,main.contact_person
+            ,main.contact_info
+            ,main.fill_form_user_uid
+            ,fill_form_user.user_name fill_form_user_name
+            ,main.project_description
+            ,main.company_demand
+            ,main.recommendations_judgments
+            ,main.project_time_node
+            ,main.plan
+            ,main.contact_time
+            ,main.result
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_potential_customer_contact main
+            LEFT JOIN sys_user fill_form_user ON fill_form_user.uid = main.fill_form_user_uid
+            LEFT JOIN demo_potential_customer potential_customer ON potential_customer.record_status = 1 AND potential_customer.uid = main.company_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

@@ -1,0 +1,19 @@
+.access-statistics i {
+    background: url("../../images/cmn/browse-fire.png") no-repeat;
+    display: block;
+    width: 23px;
+    height: 11px;
+    margin: 3px 3px 0 0;
+}
+
+.access-statistics i.grey {
+    background-position: 0 0;
+}
+
+.access-statistics i.blue {
+    background-position: 0 -40px;
+}
+
+.access-statistics i.green {
+    background-position: 0 -80px;
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.company_uid
+            ,main.name
+            ,main.department
+            ,main.post
+            ,main.responsibility
+            ,main.telephone
+            ,main.fax
+            ,main.email
+            ,main.mobile
+            ,main.birthday
+            ,main.home_address
+            ,main.home_telephone
+            ,main.home_zipcode
+            ,main.interest
+            ,main.is_main_contacts
+            ,main.remark
+            ,main.file_relation_uid
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,company.name company_name
+        FROM 
+            sys_contact main
+            LEFT JOIN sys_company company ON company.uid = main.company_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

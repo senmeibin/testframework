@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.mail_password
+            ,main.weixin
+            ,main.qq
+            ,main.head_image_url
+            ,main.ext_system_name1
+            ,main.ext_system_account1
+            ,main.ext_system_password1
+            ,main.ext_system_name2
+            ,main.ext_system_account2
+            ,main.ext_system_password2
+            ,main.ext_system_name3
+            ,main.ext_system_account3
+            ,main.ext_system_password3
+            ,main.ext_system_name4
+            ,main.ext_system_account4
+            ,main.ext_system_password4
+            ,main.ext_system_name5
+            ,main.ext_system_account5
+            ,main.ext_system_password5
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            sys_user_info main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

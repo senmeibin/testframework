@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.category_cd
+            ,main.type_cd
+            ,main.title
+            ,main.purpose
+            ,main.start_date
+            ,main.end_date
+            ,main.address
+            ,main.target
+            ,main.contents
+            ,main.required_materials
+            ,main.responsible_user_uid
+            ,main.apply_campus_uid
+            ,main.apply_date
+            ,main.apply_user_uid
+            ,main.audit_date
+            ,main.audit_user_uid
+            ,main.audit_status_cd
+            ,main.audit_comment
+            ,main.disp_seq
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,CRM002.sub_name category_name 
+            ,CRM003.sub_name type_name 
+            ,CRM004.sub_name audit_status_name
+            ,activity_campus.campus_uids
+            ,activity_campus.campus_names
+            ,responsible_user.user_name responsible_user_name 
+            ,apply_user.user_name apply_user_name 
+            ,audit_user.user_name audit_user_name 
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,apply_campus.name apply_campus_name
+        FROM
+            crm_activity main
+            LEFT JOIN
+                (
+                    -- 参与校区
+                    SELECT
+                        GROUP_CONCAT(activity_campus.campus_uid) campus_uids
+                        ,GROUP_CONCAT(campus.name) campus_names
+                        ,activity_campus.activity_uid
+                    FROM
+                        crm_activity_campus activity_campus,
+                        crm_campus campus
+                    WHERE
+                        activity_campus.campus_uid = campus.uid
+                    GROUP BY
+                        activity_campus.activity_uid
+                ) AS activity_campus ON activity_campus.activity_uid = main.uid
+            LEFT JOIN sys_dictionary CRM002 ON CRM002.record_status = 1 AND CRM002.main_cd = 'CRM002' AND CRM002.sub_cd = main.category_cd 
+            LEFT JOIN sys_dictionary CRM003 ON CRM003.record_status = 1 AND CRM003.main_cd = 'CRM003' AND CRM003.sub_cd = main.type_cd 
+            LEFT JOIN sys_dictionary CRM004 ON CRM004.record_status = 1 AND CRM004.main_cd = 'CRM004' AND CRM004.sub_cd = main.audit_status_cd
+            LEFT JOIN crm_campus apply_campus ON apply_campus.uid = main.apply_campus_uid
+            LEFT JOIN sys_user responsible_user ON responsible_user.uid = main.responsible_user_uid 
+            LEFT JOIN sys_user apply_user ON apply_user.uid = main.apply_user_uid 
+            LEFT JOIN sys_user audit_user ON audit_user.uid = main.audit_user_uid 
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE
+            main.record_status = 1
+            ${dynamicCondition}
+        ]]>
+    </search>
+</sql>

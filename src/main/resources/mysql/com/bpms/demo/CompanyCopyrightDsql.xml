@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.company_uid
+            ,company.company_name
+            ,main.national_planning_project_num
+            ,main.provincial_level_num
+            ,main.foreign_patent_num
+            ,main.technical_contract_num
+            ,main.technical_contract_amount
+            ,main.rd_cases_num
+            ,main.total_engineering_num
+            ,main.en_national_level_num
+            ,main.en_provincial_level_num
+            ,main.en_municipal_level_num
+            ,main.total_project_num
+            ,main.project_national_level_num
+            ,main.project_provincial_level_num
+            ,main.project_municipal_level_num
+            ,main.state_subsidy_amount
+            ,main.provincial_subsidy_amount
+            ,main.municipal_subsidy_amount
+            ,main.year
+            ,main.ipr_applications_num
+            ,main.patent_invention_num
+            ,main.intellectual_property_num
+            ,main.invention_patents_auth_num
+            ,main.effective_intellectual_num
+            ,main.invention_patents_num
+            ,main.software_copyright_num
+            ,main.new_plant_num
+            ,main.ic_layout_num
+            ,main.other_intellectual_num
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_company_copyright main
+            LEFT JOIN demo_company_information company ON company.uid = main.company_uid AND company.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

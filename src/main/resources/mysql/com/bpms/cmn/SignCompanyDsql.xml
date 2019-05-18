@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.enterprise_uid
+            ,main.company_name
+            ,main.company_addr
+            ,main.company_telephone
+            ,main.bank_name
+            ,main.bank_number
+            ,main.identification_number
+            ,main.disp_seq
+            ,main.invoice_company_uid
+            ,main.company_code
+            ,main.company_number
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name
+            ,invoice_company.dept_full_name invoice_company_name
+        FROM 
+            cmn_sign_company main
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN sys_dept invoice_company ON invoice_company.uid = main.invoice_company_uid
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

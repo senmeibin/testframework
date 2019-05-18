@@ -1,0 +1,34 @@
+// 定义数据输入画面JS类
+SysApp.Sys.AttachmentImportDetail = Class.create();
+
+SysApp.Sys.AttachmentImportDetail.prototype = Object.extend(new SysApp.Sys.CommonInput(), {
+    //初期化回调处理
+    initCallback: function () {
+        this.initCommonCallback();
+        this.popupPosition = "firstTop";
+    },
+
+    /**********************以下方法为可选方法**********************/
+    //详细/编辑POPUP控件表示回调函数
+    showCallback: function () {
+
+    },
+
+    //画面DOM初期化前处理
+    initInputFormBefore: function () {
+
+    },
+
+    //画面DOM初期化后处理
+    initInputFormAfter: function () {
+        var title = "数据导入日志详细";
+        this.$("ctlTitle").html(title);
+
+        for (var i = 1; i <= 10; i++) {
+            var key = $M.addLeft(i, 2, "0");
+            if (this.isNotEmpty(this.inputEntity["importAttributeName" + key])) {
+                this.setValue("importAttribute" + key, this.inputEntity["importAttributeName" + key] + "：" + this.inputEntity["importAttributeValue" + key]);
+            }
+        }
+    }
+});

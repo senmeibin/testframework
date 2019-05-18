@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT 
+            main.uid
+            ,main.base_uid
+            ,base.base_name
+            ,main.visiting_units
+            ,main.visiting_time
+            ,main.number_of_visitors
+            ,main.receptionist_uid
+            ,receptionist.user_name receptionist_name
+            ,main.visiting_reasons
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name 
+            ,update_user.user_name update_user_name 
+        FROM 
+            demo_visitor_records main
+            LEFT JOIN demo_base_info base ON base.uid = main.base_uid AND base.record_status = 1
+            LEFT JOIN sys_user receptionist ON receptionist.uid = main.receptionist_uid AND receptionist.record_status = 1
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user 
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user 
+        WHERE 
+            main.record_status = 1
+        ]]>
+    </search>
+</sql>

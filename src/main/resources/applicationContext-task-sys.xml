@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>任务配置</description>
+
+    <context:component-scan base-package="com.bpms.*.scheduler"/>
+    <task:annotation-driven/>
+
+    <task:scheduled-tasks>
+        <!-- 定时迁移短信日志 每天12点半执行 -->
+        <task:scheduled ref="dataMigrationTask" method="migrationSmsLog" cron="0 30 0 * * ?"/>
+        <!-- 定时迁移邮件日志 每天12点半执行 -->
+        <task:scheduled ref="dataMigrationTask" method="migrationMailLog" cron="0 30 0 * * ?"/>
+        <!-- 定时迁移操作日志 每天12点半执行 -->
+        <task:scheduled ref="dataMigrationTask" method="migrationOperationLog" cron="0 30 0 * * ?"/>
+        <!-- 定时迁移登录日志 每天12点半执行 -->
+        <task:scheduled ref="dataMigrationTask" method="migrationLoginLog" cron="0 30 0 * * ?"/>
+        <!-- 定时迁移定时任务执行日志 每天12点半执行 -->
+        <task:scheduled ref="dataMigrationTask" method="migrationTaskExecuteLog" cron="0 30 0 * * ?"/>
+
+        <!-- 定时重发失败的邮件 每小时执行一次 -->
+        <task:scheduled ref="failedMailResendTask" method="execute" cron="0 0 0/1 * * ?"/>
+
+        <!-- 每周六优化表空间，每周六的凌晨五点-->
+        <task:scheduled ref="tableSpaceOptimizeTask" method="execute" cron="0 0 5 ? * Sat"/>
+
+        <!-- 定时清理redis key -->
+        <task:scheduled ref="clearRedisKeysTask" method="execute" cron="0 0/10 * * * ?"/>
+    </task:scheduled-tasks>
+</beans>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<sql>
+    <search>
+        <![CDATA[
+        SELECT
+            main.uid
+            ,main.enterprise_uid
+            ,main.user_uid
+            ,main.user_cd
+            ,main.user_name
+            ,main.remote_ip
+            ,main.login_type
+            ,SYS002.sub_name login_type_name
+            ,main.login_result
+            ,SYS005.sub_name login_result_name
+            ,main.url
+            ,main.parameters
+            ,main.remark
+            ,main.insert_user
+            ,main.update_user
+            ,main.insert_date
+            ,main.update_date
+            ,main.record_status
+            ,insert_user.user_name insert_user_name
+            ,update_user.user_name update_user_name
+        FROM
+            sys_login_log main
+            LEFT JOIN sys_user login_user ON login_user.uid = main.user_uid
+            LEFT JOIN sys_user insert_user ON insert_user.uid = main.insert_user
+            LEFT JOIN sys_user update_user ON update_user.uid = main.update_user
+            LEFT JOIN sys_dictionary SYS002 ON SYS002.record_status = 1 AND SYS002.main_cd = 'SYS002' AND SYS002.sub_cd = main.login_type
+            LEFT JOIN sys_dictionary SYS005 ON SYS005.record_status = 1 AND SYS005.main_cd = 'SYS005' AND SYS005.sub_cd = main.login_result
+        WHERE
+            main.record_status = 1
+        ]]>
+    </search>
+    
+    <!-- 按天统计系统用户登录次数-->
+    <searchLoginCountByDay>
+        <![CDATA[
+        SELECT
+            area.dept_name         area_name,
+            company.dept_name      company_name,
+            dept.dept_name         dept_name,
+            position.position_name position_name,
+            main.user_name,
+            main.user_cd,
+            main.user_mail,
+            main.user_phone,
+            IFNULL(report.login_times,0) login_times,
+            IFNULL(report.login_days,0) login_days
+        FROM
+            sys_user main
+            LEFT JOIN
+            (
+                SELECT
+                    main.user_uid,
+                    SUM(login_times) login_times,
+                    SUM(login_days)  login_days
+                FROM
+                    (
+                        -- 每天登录次数
+                        SELECT
+                            log.user_uid,
+                            COUNT(1)    login_times,
+                            0           login_days
+                        FROM
+                            sys_login_log log
+                            INNER JOIN sys_user main ON main.uid = log.user_uid
+                            LEFT JOIN sys_position position ON position.uid = main.position_uid
+                            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid
+                            LEFT JOIN sys_dept company ON company.uid = dept.company_dept_uid
+                            LEFT JOIN sys_dept area ON area.uid = company.parent_dept_uid
+                        WHERE
+                            log.record_status = 1
+                            AND log.login_result = 1
+                            AND log.insert_date >= :beginDate
+                            AND log.insert_date <= :endDate
+                            ${dynamicCondition}
+                        GROUP BY
+                            log.user_uid
+                        -- 每天计一次 共登录天数
+                        UNION ALL
+                        SELECT
+                            log.user_uid,
+                            0                                                         login_days,
+                            COUNT(DISTINCT DATE_FORMAT(log.insert_date, '%Y-%m-%d')) login_days
+                        FROM
+                            sys_login_log log
+                            INNER JOIN sys_user main ON main.uid = log.user_uid
+                            LEFT JOIN sys_position position ON position.uid = main.position_uid
+                            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid
+                            LEFT JOIN sys_dept company ON company.uid = dept.company_dept_uid
+                            LEFT JOIN sys_dept area ON area.uid = company.parent_dept_uid
+                        WHERE
+                            main.record_status = 1
+                            AND log.login_result = 1
+                            AND log.insert_date >= :beginDate
+                            AND log.insert_date <= :endDate
+                            ${dynamicCondition}
+                        GROUP BY
+                            log.user_uid
+                    ) main
+                GROUP BY
+                    main.user_uid
+            ) report ON report.user_uid = main.uid
+            LEFT JOIN sys_position position ON position.uid = main.position_uid
+            LEFT JOIN sys_dept dept ON dept.uid = main.dept_uid
+            LEFT JOIN sys_dept company ON company.uid = dept.company_dept_uid
+            INNER JOIN sys_dept area ON area.uid = company.parent_dept_uid
+        WHERE
+            main.record_status = 1
+            AND main.user_name NOT LIKE '%城市用户'
+            ${dynamicCondition}
+        ]]>
+    </searchLoginCountByDay>
+</sql>
